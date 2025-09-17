@@ -37,17 +37,17 @@
     }
 
     /* Sidebar */
-    #sidebar {
-      background-color: #6B8D5C;
-      width: 220px;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      padding: 40px 10px 20px 10px;
-      box-sizing: border-box;
-      flex-shrink: 0;
-      position: relative;
-    }
+	#sidebar {
+	  background-color: #6B8D5C;
+	  width: 220px;
+	  display: flex;
+	  flex-direction: column;
+	  padding: 40px 10px 20px 10px;
+	  box-sizing: border-box;
+	  flex-shrink: 0;
+	  position: relative;
+	  /* REMOVE height: 100vh; */
+	}
 
     .sidebar-heading {
       font-family: 'Right Grotesk Medium', sans-serif;
@@ -74,33 +74,30 @@
       opacity: 0.85;
     }
 
-    /* Sketch links grid - perfectly square buttons */
-    .sketch-icons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      width: 100%;
-      padding: 0 10px;
-      box-sizing: border-box;
-      margin-bottom: 20px;
-    }
+	.sketch-icons {
+	  display: grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap: 15px;
+	  width: 100%;
+	  padding: 0 10px;
+	  box-sizing: border-box;
+	  margin-bottom: 20px;
+	}
 
-    .sketch-link {
-      background-color: rgba(255,255,255,0.05);
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: 'Right Grotesk Medium', sans-serif;
-      font-size: 20px;
-      color: #A8B69A;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      transition: transform 0.2s, background-color 0.2s;
-      aspect-ratio: 1 / 0.5; /* makes button perfectly square */
-      word-break: break-word;
-    }
+	.sketch-link {
+	  display: block;               /* no flex */
+	  font-family: 'Right Grotesk Medium', sans-serif;
+	  font-size: 100px;             /* your desired font size */
+	  line-height: 1.1;             /* tight line-height to fit text */
+	  text-align: center;
+	  padding: 10px 5px;            /* give a little breathing room */
+	  background-color: rgba(255,255,255,0.05);
+	  border-radius: 8px;
+	  cursor: pointer;
+	  color: #A8B69A;
+	  transition: transform 0.2s, background-color 0.2s;
+	  word-break: break-word;       /* keep multi-line text inside box */
+	}
 
     .sketch-link:hover {
       transform: scale(1.05);
@@ -125,9 +122,10 @@
 
     /* Museum logo top right */
     .top-right-logo {
-      position: absolute;
+      position: fixed;   /* fixed so always visible */
       top: 20px;
       right: 20px;
+      z-index: 1000;
       text-align: right;
     }
 
