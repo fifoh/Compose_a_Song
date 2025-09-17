@@ -5,27 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My p5.js Sketches</title>
 
-  <!-- Load custom fonts -->
   <style>
     @font-face {
       font-family: 'Right Grotesk Wide Medium';
       src: url('fonts/RightGrotesk-WideMedium.otf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
     }
 
     @font-face {
       font-family: 'Right Grotesk Medium';
       src: url('fonts/RightGrotesk-Medium.otf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
     }
 
     @font-face {
       font-family: 'Montserrat SemiBold';
       src: url('fonts/Montserrat-Medium.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
     }
 
     body {
@@ -81,7 +74,7 @@
       opacity: 0.85;
     }
 
-    /* Sketch links grid */
+    /* Sketch links grid - perfectly square buttons */
     .sketch-icons {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -94,14 +87,19 @@
 
     .sketch-link {
       background-color: rgba(255,255,255,0.05);
-      padding: 20px 10px;
       border-radius: 8px;
-      text-align: center;
       cursor: pointer;
       font-family: 'Right Grotesk Medium', sans-serif;
-      font-size: 24px;
+      font-size: 20px;
       color: #A8B69A;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
       transition: transform 0.2s, background-color 0.2s;
+      aspect-ratio: 1 / 0.5; /* makes button perfectly square */
+      word-break: break-word;
     }
 
     .sketch-link:hover {
@@ -122,13 +120,8 @@
       cursor: pointer;
     }
 
-    .language-toggle .nl {
-      color: #A8B69A;
-    }
-
-    .language-toggle .eng {
-      color: white;
-    }
+    .language-toggle .nl { color: #A8B69A; }
+    .language-toggle .eng { color: white; }
 
     /* Museum logo top right */
     .top-right-logo {
@@ -138,10 +131,7 @@
       text-align: right;
     }
 
-    .top-right-logo img {
-      width: 150px;
-      height: auto;
-    }
+    .top-right-logo img { width: 150px; height: auto; }
 
     /* Content area */
     #content {
@@ -178,10 +168,8 @@
     /* Loading overlay */
     #loading-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background-color: white;
       z-index: 9999;
       display: none;
@@ -205,51 +193,23 @@
 
     /* Responsive adjustments */
     @media screen and (max-width: 768px) {
-      #main-container {
-        flex-direction: column;
-        height: auto;
-      }
+      #main-container { flex-direction: column; height: auto; }
 
-      #sidebar {
-        width: 100%;
-        height: auto;
-        padding: 20px 10px;
-      }
+      #sidebar { width: 100%; height: auto; padding: 20px 10px; }
 
-      #content {
-        padding: 20px 10px;
-      }
+      #content { padding: 20px 10px; }
 
-      .sidebar-heading {
-        font-size: 24px;
-        padding-left: 10px;
-      }
+      .sidebar-heading { font-size: 24px; padding-left: 10px; }
 
-      .sketch-icons {
-        grid-template-columns: 1fr; /* single column on mobile */
-        gap: 10px;
-      }
+      .sketch-link { font-size: 18px; }
 
-      .sketch-link {
-        font-size: 20px;
-        padding: 15px 10px;
-      }
+      .instructions-title { font-size: 36px; }
 
-      .instructions-title {
-        font-size: 36px;
-      }
+      .instructions ul { font-size: 18px; }
 
-      .instructions ul {
-        font-size: 18px;
-      }
+      .language-toggle { font-size: 16px; }
 
-      .language-toggle {
-        font-size: 16px;
-      }
-
-      .top-right-logo img {
-        width: 120px;
-      }
+      .top-right-logo img { width: 120px; }
     }
   </style>
 </head>
@@ -265,26 +225,24 @@
     <div class="loader"></div>
   </div>
 
-  <!-- Main layout container -->
+  <!-- Main container -->
   <div id="main-container">
     <!-- Sidebar -->
     <div id="sidebar">
-      <!-- Sidebar Heading -->
       <div class="sidebar-heading">
         Componeer<br>een lied
         <div class="underscore"></div>
         <img src="images/home_icon.png" alt="Home Icon" class="home-icon" />
       </div>
 
-      <!-- Sidebar Links in 2x2 grid -->
+      <!-- 2x2 grid -->
       <div class="sketch-icons">
-        <div class="sketch-link" data-sketch="carriers/disc/index.html">Metalen plaat</div>
+        <div class="sketch-link" data-sketch="carriers/disc/index.html">Metalen<br>Plaat</div>
         <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cilinder</div>
         <div class="sketch-link" data-sketch="carriers/book/index.html">Orgelboek</div>
-        <div class="sketch-link" data-sketch="carriers/roll/index.html">Papieren rol</div>
+        <div class="sketch-link" data-sketch="carriers/roll/index.html">Papieren<br>Rol</div>
       </div>
 
-      <!-- Language toggle under grid -->
       <div class="language-toggle">
         <a href="index.html">
           <span class="eng">NL </span><span class="nl">/ ENG</span>
@@ -305,12 +263,10 @@
     </div>
   </div>
 
-  <!-- Script to handle sketch loading -->
   <script>
     document.querySelectorAll('.sketch-link').forEach(link => {
       link.addEventListener('click', () => {
-        const sketchPath = link.getAttribute('data-sketch');
-        window.location.href = sketchPath;
+        window.location.href = link.getAttribute('data-sketch');
       });
     });
   </script>
