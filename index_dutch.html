@@ -37,17 +37,17 @@
     }
 
     /* Sidebar */
-	#sidebar {
-	  background-color: #6B8D5C;
-	  width: 220px;
-	  display: flex;
-	  flex-direction: column;
-	  padding: 40px 10px 20px 10px;
-	  box-sizing: border-box;
-	  flex-shrink: 0;
-	  position: relative;
-	  /* REMOVE height: 100vh; */
-	}
+    #sidebar {
+      background-color: #6B8D5C;
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      padding: 40px 10px 20px 10px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      position: relative;
+      /* REMOVE height: 100vh; */
+    }
 
     .sidebar-heading {
       font-family: 'Right Grotesk Medium', sans-serif;
@@ -66,40 +66,32 @@
       margin-top: 16px;
     }
 
-    .home-icon {
-      margin-top: 16px;
-      margin-left: 2px;
-      width: 55px;
-      height: auto;
-      opacity: 0.85;
+    .sketch-icons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px; /* This creates the vertical space between boxes */
+      width: 100%;
+      padding: 0 10px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
     }
 
-	.sketch-icons {
-	  display: grid;
-	  grid-template-columns: 1fr 1fr;
-	  gap: 15px; /* This creates the vertical space between boxes */
-	  width: 100%;
-	  padding: 0 10px;
-	  box-sizing: border-box;
-	  margin-bottom: 20px;
-	}
-
-	.sketch-link {
-	  display: flex;
-	  flex-direction: column;
-	  justify-content: center;
-	  align-items: center;
-	  /* REMOVE height: 100%; */
-	  font-family: 'Right Grotesk Medium', sans-serif;
-	  font-size: 24px;
-	  text-align: center;
-	  padding: 15px 5px;
-	  background-color: rgba(255, 255, 255, 0.05);
-	  border-radius: 8px;
-	  cursor: pointer;
-	  color: #a8b69a;
-	  transition: transform 0.2s, background-color 0.2s;
-	}
+    .sketch-link {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* REMOVE height: 100%; */
+      font-family: 'Right Grotesk Medium', sans-serif;
+      font-size: 24px;
+      text-align: center;
+      padding: 15px 5px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      cursor: pointer;
+      color: #a8b69a;
+      transition: transform 0.2s, background-color 0.2s;
+    }
 
     .sketch-link:hover {
       transform: scale(1.05);
@@ -124,7 +116,7 @@
 
     /* Museum logo top right */
     .top-right-logo {
-      position: fixed;   /* fixed so always visible */
+      position: fixed;    /* fixed so always visible */
       top: 20px;
       right: 20px;
       z-index: 1000;
@@ -215,27 +207,21 @@
 </head>
 
 <body>
-  <!-- Museum logo top right -->
   <div class="top-right-logo">
     <img src="images/logo.png" alt="Museum Logo NL/EN" />
   </div>
 
-  <!-- Loading overlay -->
   <div id="loading-overlay">
     <div class="loader"></div>
   </div>
 
-  <!-- Main container -->
   <div id="main-container">
-    <!-- Sidebar -->
     <div id="sidebar">
       <div class="sidebar-heading">
         Componeer<br>een lied
         <div class="underscore"></div>
-        <img src="images/home_icon.png" alt="Home Icon" class="home-icon" />
       </div>
 
-      <!-- 2x2 grid -->
       <div class="sketch-icons">
         <div class="sketch-link" data-sketch="carriers/disc/index.html">Metalen<br>Plaat</div>
         <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cilinder</div>
@@ -250,7 +236,6 @@
       </div>
     </div>
 
-    <!-- Main content -->
     <div id="content">
       <div class="instructions">
         <div class="instructions-title">Wat ga je doen</div>
