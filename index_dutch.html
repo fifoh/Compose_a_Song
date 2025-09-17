@@ -28,7 +28,6 @@
       font-style: normal;
     }
 
-    /* Global layout */
     body {
       margin: 0;
       padding: 0;
@@ -41,6 +40,7 @@
       flex-direction: row;
       height: 100vh;
       flex-wrap: wrap;
+      position: relative;
     }
 
     /* Sidebar */
@@ -53,6 +53,7 @@
       padding: 40px 10px 20px 10px;
       box-sizing: border-box;
       flex-shrink: 0;
+      position: relative;
     }
 
     .sidebar-heading {
@@ -112,14 +113,40 @@
       outline: none;
     }
 
-    .sidebar-logo {
+    /* Logo and language in sidebar */
+    #sidebar-bottom {
       margin-top: auto;
-      text-align: center;
-      padding-top: 20px;
-      padding-right: 15px;
+      padding-left: 20px;
     }
 
-    .sidebar-logo img {
+    .language-toggle {
+      margin-top: 20px;
+      font-family: 'Right Grotesk Medium', sans-serif;
+      font-size: 20px;
+    }
+
+    .language-toggle a {
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .language-toggle .nl {
+      color: #A8B69A;
+    }
+
+    .language-toggle .eng {
+      color: white;
+    }
+
+    /* Museum logo top right */
+    .top-right-logo {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      text-align: right;
+    }
+
+    .top-right-logo img {
       width: 150px;
       height: auto;
     }
@@ -154,29 +181,6 @@
     .instructions ul li {
       margin-bottom: 16px;
       line-height: 1.6;
-    }
-
-    /* Language toggle text */
-    .language-toggle {
-      position: absolute;
-      bottom: 130px;
-      left: 30px;
-      z-index: 100;
-      font-family: 'Right Grotesk Medium', sans-serif;
-      font-size: 20px;
-    }
-
-    .language-toggle a {
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .language-toggle .nl {
-      color: #A8B69A;
-    }
-
-    .language-toggle .eng {
-      color: white;
     }
 
     /* Loading overlay */
@@ -242,25 +246,21 @@
         font-size: 18px;
       }
 
-      .sidebar-logo img {
-        width: 120px;
+      .language-toggle {
+        font-size: 16px;
       }
 
-      .language-toggle {
-        bottom: 20px;
-        left: 10px;
-        font-size: 16px;
+      .top-right-logo img {
+        width: 120px;
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- Language toggle -->
-  <div class="language-toggle">
-    <a href="index.html">
-      <span class="eng">NL </span><span class="nl">/ ENG</span>
-    </a>
+  <!-- Museum logo top right -->
+  <div class="top-right-logo">
+    <img src="images/logo.png" alt="Museum Logo NL/EN" />
   </div>
 
   <!-- Loading overlay -->
@@ -285,13 +285,14 @@
         <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cilinder</div>
         <div class="sketch-link" data-sketch="carriers/book/index.html">Orgelboek</div>
         <div class="sketch-link" data-sketch="carriers/roll/index.html">Papieren rol</div>
-      </div>
 
-      <!-- Logo at bottom-->
-      <div class="sidebar-logo">
-        <img src="images/logo.png" alt="Logo" />
+        <!-- Language toggle under Papieren rol -->
+        <div class="language-toggle">
+          <a href="index.html">
+            <span class="eng">NL </span><span class="nl">/ ENG</span>
+          </a>
+        </div>
       </div>
-
     </div>
 
     <!-- Main content -->
