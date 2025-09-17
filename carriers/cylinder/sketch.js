@@ -49,7 +49,7 @@ let removeButton;
 let note_duration = 200;
 
 let totalHorizontalPoints = 32;
-let totalVerticalPoints = 13;
+let totalVerticalPoints = 12;
 let totalDuration = note_duration * totalHorizontalPoints;
 
 let instrumentButtons = [];
@@ -248,7 +248,8 @@ let minorScale = {
   15: 26
 }
 
-let xoffset_cylinder = 200; // offset for center
+let xoffset_cylinder = 0; // offset for center
+let y_offset_cylinder = 70;
 
 // default scale mapping
 let scaleMappings = majorScale; // Default scale
@@ -270,156 +271,76 @@ function setup() {
   drawingContext.depthFunc(drawingContext.LEQUAL);
   drawingContext.hint(drawingContext.PERSPECTIVE_CORRECTION_HINT, drawingContext.FASTEST);
   
-  // === Create left panel ===
+  // === Top panel (home, name, logo, language toggle) ===
   leftPanel = createDiv();
   leftPanel.style('position', 'absolute');
   leftPanel.style('top', '0px');
   leftPanel.style('left', '0px');
-  leftPanel.style('width', '200px');
-  leftPanel.style('height', windowHeight + 'px');
+  leftPanel.style('width', '100%');
+  leftPanel.style('height', '70px'); // adjust height
   leftPanel.style('background-color', '#6B8D5C');
   leftPanel.style('display', 'flex');
-  leftPanel.style('flex-direction', 'column');
-  leftPanel.style('padding', '0px');
-  leftPanel.style('gap', '0px');
-
-  // === Create mid panel ===
-  midPanel = createDiv();
-  midPanel.style('position', 'absolute');
-  midPanel.style('top', '0px');
-  midPanel.style('left', '200px');
-  midPanel.style('width', '100px');
-  midPanel.style('height', windowHeight + 'px');
-  midPanel.style('background-color', '#ADB99F');
-  midPanel.style('display', 'flex');
-  midPanel.style('flex-direction', 'column');
-  midPanel.style('padding', '0px');
-  midPanel.style('gap', '0px');  
-
-  // === Create right panel ===
-  rightPanel = createDiv();
-  rightPanel.style('position', 'absolute');
-  rightPanel.style('top', '0px');
-  rightPanel.style('left', '300px');
-  rightPanel.style('width', '100px');
-  rightPanel.style('height', windowHeight + 'px');
-  rightPanel.style('background-color', '#775989');
-  rightPanel.style('display', 'flex');
-  rightPanel.style('flex-direction', 'column');
-  rightPanel.style('padding', '0px');
-  rightPanel.style('gap', '0px');  
+  leftPanel.style('flex-direction', 'row'); // horizontal buttons
+  leftPanel.style('align-items', 'center');
+  leftPanel.style('justify-content', 'space-between');
+  leftPanel.style('padding', '10px 10px');
   
-  // HOME BUTTON
+  // Left side: Home + Name
+  let topLeft = createDiv();
+  topLeft.parent(leftPanel);
+  topLeft.style('display', 'flex');
+  topLeft.style('flex-direction', 'row');
+  topLeft.style('align-items', 'center');
+  topLeft.style('gap', '15px');
+
   homeLink = createImg("images/home_icon.png", "Home");
   homeLink.size(55, 55);
-  homeLink.position(32, 145);
+  homeLink.parent(topLeft);
   homeLink.style('opacity', '0.8');
-  homeLink.mousePressed(() => {
-    window.location.href = "../../index_dutch.html";
-  });   
-  
-  // "Name game" heading
-  let nameGame = createP("Componeer<br>een lied");
-  nameGame.style('font-family', 'RightGrotesk');
-  nameGame.style('color', 'white');
-  nameGame.style('font-size', '32px');
-  nameGame.style('line-height', '1.1');
-  nameGame.style('margin', '0');
-  nameGame.position(30, 40); // Adjust as needed
+  homeLink.mousePressed(() => window.location.href = "../../index_dutch.html");
 
-  // Underscore line below the heading
-  let underscore = createDiv();
-  underscore.style('width', '95px');         
-  underscore.style('height', '1px');
-  underscore.style('background-color', 'white');
-  underscore.position(30, 125);              
-  
-  // link buttons to carriers
-  discLink = createP("Metalen plaat");
-  discLink.style('font-family', 'RightGrotesk');
-  discLink.style('color', '#A8B69A');
-  discLink.style('font-size', '26px'); // Adjust as needed
-  discLink.position(30, 230);
-  discLink.style('cursor', 'pointer');
-  discLink.mousePressed(() => {
-    window.location.href = "../disc/index.html";
-  });
-  
-  cylinderLink = createP("Cilinder");
-  cylinderLink.style('font-family', 'RightGrotesk');
-  cylinderLink.style('color', 'white');
-  cylinderLink.style('text-decoration', 'underline');    
-  cylinderLink.style('font-size', '26px'); // Adjust as needed
-  cylinderLink.position(30, 285);
-  cylinderLink.style('cursor', 'pointer');
-  cylinderLink.mousePressed(() => {
-    window.location.href = "../cylinder/index.html";
-  });  
-  
-  bookLink = createP("Orgelboek");
-  bookLink.style('font-family', 'RightGrotesk');
-  bookLink.style('color', '#A8B69A');
-  bookLink.style('font-size', '26px'); // Adjust as needed
-  bookLink.position(30, 340);
-  bookLink.style('cursor', 'pointer');
-  bookLink.mousePressed(() => {
-    window.location.href = "../book/index.html";
-  });  
-
-  rollLink = createP("Papieren rol");
-  rollLink.style('font-family', 'RightGrotesk');
-  rollLink.style('color', '#A8B69A');
-  rollLink.style('font-size', '26px'); // Adjust as needed
-  rollLink.position(30, 395);
-  rollLink.style('cursor', 'pointer');
-  rollLink.mousePressed(() => {
-    window.location.href = "../roll/index.html";
-  });     
-  
   speelkloklogo = createImg("images/speelklok_logo.png", "logo");
   speelkloklogo.size(150, 65);
-  speelkloklogo.position(17, windowHeight-87);
-  speelkloklogo.mousePressed(() => {
-    window.location.href = "../../index_dutch.html";
-  });     
-  
-  // Language toggle
-  let isEnglish = false;
-  let languagetoggle = createP('<span style="color:white">NL</span><span style="color:#A8B69A"> / ENG</span>');
-  languagetoggle.style('font-family', 'RightGrotesk');
-  languagetoggle.style('font-size', '20px');
-  languagetoggle.style('line-height', '1.1');
-  languagetoggle.style('margin', '0');
-  languagetoggle.style('position', 'absolute');
-  languagetoggle.style('left', '30px');
-  languagetoggle.style('bottom', '130px');   
-  languagetoggle.style('cursor', 'pointer');
-  languagetoggle.mousePressed(() => {
-    // Toggle language
-    isEnglish = !isEnglish;
-  
-    if (isEnglish) {
-      languagetoggle.html('<span style="color:#A8B69A">NL / </span><span style="color:white">ENG</span>');
-      rollLink.html("Piano roll");
-	  discLink.html("Disc");
-	  bookLink.html("Organ book");
-	  cylinderLink.html("Cylinder");
-	  nameGame.html("Compose<br>a song");
-	  
-    } else {
-      languagetoggle.html('<span style="color:white">NL</span><span style="color:#A8B69A"> / ENG</span>');
-      rollLink.html("Papieren rol");
-	  discLink.html("Metalen plaat");
-	  bookLink.html("Orgelboek");
-	  cylinderLink.html("Cilinder");
-	  nameGame.html("Componeer<br>een lied");
-    }
-  });      
+  speelkloklogo.parent(topLeft);
+  speelkloklogo.mousePressed(() => window.location.href = "../../index_dutch.html");  
 
-  radius = windowWidth * 0.07; // was 0.2
-  cylinderHeight = windowHeight * 0.37; // was 0.4
+  // === Middle panel (horizontal buttons) ===
+  midPanel = createDiv();
+  midPanel.style('position', 'absolute');
+  midPanel.style('top', leftPanel.elt.offsetHeight + 'px');
+  midPanel.style('left', '0px');
+  midPanel.style('width', '100%');
+  midPanel.style('height', '60px'); // adjust
+  midPanel.style('background-color', '#ADB99F');
+  midPanel.style('display', 'flex');
+  midPanel.style('flex-direction', 'row');
+  midPanel.style('align-items', 'center');
+  midPanel.style('justify-content', 'flex-start');
+  midPanel.style('gap', '15px');
+  midPanel.style('padding', '10px');
 
-  createPlayButton();
+  // === Bottom panel (horizontal buttons) ===
+  rightPanel = createDiv();
+  rightPanel.style('position', 'absolute');
+  rightPanel.style('top', leftPanel.elt.offsetHeight + midPanel.elt.offsetHeight + 'px');
+  rightPanel.style('left', '0px');
+  rightPanel.style('width', '100%');
+  rightPanel.style('height', '70px'); // adjust
+  rightPanel.style('background-color', '#775989');
+  rightPanel.style('display', 'flex');
+  rightPanel.style('flex-direction', 'row');
+  rightPanel.style('align-items', 'center');
+  rightPanel.style('justify-content', 'flex-start');
+  rightPanel.style('gap', '25px');
+  rightPanel.style('padding', '10px');   
+
+  playButton = createImg("images/play_icon.jpg", "▶");
+  playButton.size(55, 55);
+  playButton.parent(rightPanel);
+  playButton.touchStarted(togglePlayback);  
+
+  radius = windowWidth * 0.2; // was 0.2
+  cylinderHeight = windowHeight * 0.3; // was 0.4
 
   let sliderWrapper = select(".slider-wrapper");
   durationSlider = createSlider(200, 1000, 700); // Min 200 ms, Max 1s, Initial 800 ms
@@ -433,31 +354,30 @@ function setup() {
 
   clearButton = createImg("images/bin_icon.jpg", "✖");
   clearButton.size(60, 60);
-  clearButton.position(320, 160);
+  clearButton.parent(rightPanel);
   clearButton.touchStarted(clearNotes);
-  
-  presetButton = createImg("images/presetbutton_inactive.jpg", "R");
-  presetButton.size(55, 50);
-  presetButton.position(225, 400);   
-  presetButton.touchStarted(togglePresetSong); 
 
   scaleButton = createImg("images/major_icon.jpg", "Scale");
   scaleButton.size(55, 55);
-  scaleButton.position(225,310);
+  scaleButton.parent(midPanel);
   scaleButton.mousePressed(cycleScale);
 
-
-  // Create three instrument buttons
+  // instrument buttons
   for (let i = 0; i < instruments.length; i++) {
     let btn = createImg(instruments[i].icon, instruments[i].name);
     btn.size(75, 75);
-    btn.position(212, 50 + i * 80);
+    btn.parent(midPanel);
     btn.mousePressed(() => selectInstrument(i));
     instrumentButtons.push(btn);
   }
 
   // Set initial instrument selection
   selectInstrument(0);
+  
+  presetButton = createImg("images/presetbutton_inactive.jpg", "R");
+  presetButton.size(55, 50);
+  presetButton.parent(midPanel); 
+  presetButton.touchStarted(togglePresetSong);     
 
   for (let i = 0; i < totalVerticalPoints; i++) {
     let y = map(
@@ -466,7 +386,7 @@ function setup() {
       totalVerticalPoints,
       cylinderHeight / 2,
       -cylinderHeight / 2
-    );
+    ) + y_offset_cylinder;
     let rowCoordinates = [];
     let rowColors = [];
     let rowNotes = [];
@@ -584,13 +504,6 @@ function playSound(buffer) {
   source.connect(gainNode);
   gainNode.connect(audioContext.destination);
   source.start(0);
-}
-
-function createPlayButton() {
-  playButton = createImg("images/play_icon.jpg", "▶");
-  playButton.size(55, 55);
-  playButton.position(322, 65);
-  playButton.touchStarted(togglePlayback);
 }
 
 function playAllNotes() {
@@ -830,8 +743,8 @@ function drawfixedHorizontalLines(cylinderYCoordinates) {
     stroke(lineColors[i]);
     strokeWeight(1 * pixelDensity());
     let y = cylinderYCoordinates[i] * 1.4;
-    let rectStartX = -windowWidth / 4.1 + xoffset_cylinder;
-    let rectEndX = -windowWidth / 10.5 + xoffset_cylinder;
+    let rectStartX = -windowWidth / 2.4 + xoffset_cylinder;
+    let rectEndX = -windowWidth / 3.5 + xoffset_cylinder;
     let rectWidth = rectEndX - rectStartX;
 
     noStroke();
@@ -839,7 +752,7 @@ function drawfixedHorizontalLines(cylinderYCoordinates) {
     rect(rectStartX, y - 0.5, rectWidth, 5);
 
     let buttonSize = 18;
-    let buttonX = -windowWidth / 4.1 - 4 + xoffset_cylinder;
+    let buttonX = -windowWidth / 2.4 + xoffset_cylinder;
     let buttonY = y+1.1;
     ellipseButtons.push({ id: i, x: buttonX, y: buttonY, size: buttonSize });
     let originalIndex = scaleMappings[i];
