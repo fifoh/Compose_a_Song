@@ -240,13 +240,13 @@ function setup() {
   leftPanel.style('top', '0px');
   leftPanel.style('left', '0px');
   leftPanel.style('width', '100%');
-  leftPanel.style('height', '80px'); // adjust height
+  leftPanel.style('height', '70px'); // adjust height
   leftPanel.style('background-color', '#6B8D5C');
   leftPanel.style('display', 'flex');
   leftPanel.style('flex-direction', 'row'); // horizontal buttons
   leftPanel.style('align-items', 'center');
   leftPanel.style('justify-content', 'space-between');
-  leftPanel.style('padding', '10px 20px');
+  leftPanel.style('padding', '10px 10px');
 
   // Left side: Home + Name
   let topLeft = createDiv();
@@ -288,13 +288,13 @@ function setup() {
   rightPanel.style('top', leftPanel.elt.offsetHeight + midPanel.elt.offsetHeight + 'px');
   rightPanel.style('left', '0px');
   rightPanel.style('width', '100%');
-  rightPanel.style('height', '60px'); // adjust
+  rightPanel.style('height', '70px'); // adjust
   rightPanel.style('background-color', '#775989');
   rightPanel.style('display', 'flex');
   rightPanel.style('flex-direction', 'row');
   rightPanel.style('align-items', 'center');
   rightPanel.style('justify-content', 'flex-start');
-  rightPanel.style('gap', '15px');
+  rightPanel.style('gap', '25px');
   rightPanel.style('padding', '10px');
   
   playButton = createImg("images/play_icon.jpg", "▶");
