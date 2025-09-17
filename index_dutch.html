@@ -34,12 +34,13 @@
       padding: 0;
       font-family: Arial, sans-serif;
       background-color: #ADB99F;
-      min-width: 1000px;
     }
 
     #main-container {
       display: flex;
+      flex-direction: row;
       height: 100vh;
+      flex-wrap: wrap;
     }
 
     /* Sidebar */
@@ -51,6 +52,7 @@
       height: 100vh;
       padding: 40px 10px 20px 10px;
       box-sizing: border-box;
+      flex-shrink: 0;
     }
 
     .sidebar-heading {
@@ -126,6 +128,7 @@
     #content {
       flex: 1;
       padding: 80px 160px 80px 40px;
+      box-sizing: border-box;
     }
 
     .instructions {
@@ -203,6 +206,52 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+      #main-container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      #sidebar {
+        width: 100%;
+        height: auto;
+        padding: 20px 10px;
+      }
+
+      #content {
+        padding: 20px 10px;
+      }
+
+      .sidebar-heading {
+        font-size: 24px;
+        padding-left: 10px;
+      }
+
+      .sketch-link {
+        font-size: 20px;
+        padding: 8px 0;
+      }
+
+      .instructions-title {
+        font-size: 36px;
+      }
+
+      .instructions ul {
+        font-size: 18px;
+      }
+
+      .sidebar-logo img {
+        width: 120px;
+      }
+
+      .language-toggle {
+        bottom: 20px;
+        left: 10px;
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 
@@ -260,13 +309,12 @@
 
   <!-- Script to handle sketch loading -->
   <script>
-  document.querySelectorAll('.sketch-link').forEach(link => {
-    link.addEventListener('click', () => {
-      const sketchPath = link.getAttribute('data-sketch');
-      // Navigate to the HTML file
-      window.location.href = sketchPath;
+    document.querySelectorAll('.sketch-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const sketchPath = link.getAttribute('data-sketch');
+        window.location.href = sketchPath;
+      });
     });
-  });
   </script>
 </body>
 </html>
