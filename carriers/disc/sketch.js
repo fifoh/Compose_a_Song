@@ -228,189 +228,118 @@ let leftPanel, midPanel, rightPanel;
 function setup() {
   audioContext.suspend().then(() => {
     console.log('AudioContext suspended in setup:', audioContext.state);
-  }).catch((err) => {
-    console.error('Error suspending AudioContext:', err);
-  });  
-  
+  }).catch((err) => console.error('Error suspending AudioContext:', err));
+
   createCanvas(windowWidth, windowHeight);
   window.addEventListener("resize", resizeCanvasToWindow);
   frameRate(60);
-  
-  // === Create left panel ===
+
+  // === Top panel (home, name, logo, language toggle) ===
   leftPanel = createDiv();
   leftPanel.style('position', 'absolute');
   leftPanel.style('top', '0px');
   leftPanel.style('left', '0px');
-  leftPanel.style('width', '200px');
-  leftPanel.style('height', windowHeight + 'px');
+  leftPanel.style('width', '100%');
+  leftPanel.style('height', '80px'); // adjust height
   leftPanel.style('background-color', '#6B8D5C');
   leftPanel.style('display', 'flex');
-  leftPanel.style('flex-direction', 'column');
-  leftPanel.style('padding', '0px');
-  leftPanel.style('gap', '0px');
+  leftPanel.style('flex-direction', 'row'); // horizontal buttons
+  leftPanel.style('align-items', 'center');
+  leftPanel.style('justify-content', 'space-between');
+  leftPanel.style('padding', '10px 20px');
 
-  // === Create mid panel ===
+  // Left side: Home + Name
+  let topLeft = createDiv();
+  topLeft.parent(leftPanel);
+  topLeft.style('display', 'flex');
+  topLeft.style('flex-direction', 'row');
+  topLeft.style('align-items', 'center');
+  topLeft.style('gap', '15px');
+
+  homeLink = createImg("images/home_icon.png", "Home");
+  homeLink.size(55, 55);
+  homeLink.parent(topLeft);
+  homeLink.style('opacity', '0.8');
+  homeLink.mousePressed(() => window.location.href = "../../index_dutch.html");
+
+  speelkloklogo = createImg("images/speelklok_logo.png", "logo");
+  speelkloklogo.size(150, 65);
+  speelkloklogo.parent(topLeft);
+  speelkloklogo.mousePressed(() => window.location.href = "../../index_dutch.html");
+
+  // === Middle panel (horizontal buttons) ===
   midPanel = createDiv();
   midPanel.style('position', 'absolute');
-  midPanel.style('top', '0px');
-  midPanel.style('left', '200px');
-  midPanel.style('width', '100px');
-  midPanel.style('height', windowHeight + 'px');
+  midPanel.style('top', leftPanel.elt.offsetHeight + 'px');
+  midPanel.style('left', '0px');
+  midPanel.style('width', '100%');
+  midPanel.style('height', '60px'); // adjust
   midPanel.style('background-color', '#ADB99F');
   midPanel.style('display', 'flex');
-  midPanel.style('flex-direction', 'column');
-  midPanel.style('padding', '0px');
-  midPanel.style('gap', '0px');  
+  midPanel.style('flex-direction', 'row');
+  midPanel.style('align-items', 'center');
+  midPanel.style('justify-content', 'flex-start');
+  midPanel.style('gap', '15px');
+  midPanel.style('padding', '10px');
 
-  // === Create right panel ===
+  // === Bottom panel (horizontal buttons) ===
   rightPanel = createDiv();
   rightPanel.style('position', 'absolute');
-  rightPanel.style('top', '0px');
-  rightPanel.style('left', '300px');
-  rightPanel.style('width', '100px');
-  rightPanel.style('height', windowHeight + 'px');
+  rightPanel.style('top', leftPanel.elt.offsetHeight + midPanel.elt.offsetHeight + 'px');
+  rightPanel.style('left', '0px');
+  rightPanel.style('width', '100%');
+  rightPanel.style('height', '60px'); // adjust
   rightPanel.style('background-color', '#775989');
   rightPanel.style('display', 'flex');
-  rightPanel.style('flex-direction', 'column');
-  rightPanel.style('padding', '0px');
-  rightPanel.style('gap', '0px');  
+  rightPanel.style('flex-direction', 'row');
+  rightPanel.style('align-items', 'center');
+  rightPanel.style('justify-content', 'flex-start');
+  rightPanel.style('gap', '15px');
+  rightPanel.style('padding', '10px');
   
+  playButton = createImg("images/play_icon.jpg", "▶");
+  playButton.size(55, 55);
+  playButton.parent(rightPanel);
+  playButton.mousePressed(togglePlayback);  
+
+  // === Canvas graphics ===
   buttonGraphics = createGraphics(windowWidth, windowHeight);
-  circleCenterX = windowWidth / 1.5; // offset for interface
-  circleCenterY = windowHeight / 2;
+  circleCenterX = windowWidth / 2;
+  circleCenterY = windowHeight / 1.7;
   let baseRadius = Math.min(windowWidth, windowHeight) * 0.45;
   circleRadius = baseRadius;
   initializePointsArray();
-  createPlayButton();
-  createClearButton();
   
-  // HOME BUTTON
-  homeLink = createImg("images/home_icon.png", "Home");
-  homeLink.size(55, 55);
-  homeLink.position(32, 145);
-  homeLink.style('opacity', '0.8');
-  homeLink.mousePressed(() => {
-    window.location.href = "../../index_dutch.html";
-  });   
-  
-  // "Name game" heading
-  let nameGame = createP("Componeer<br>een lied");
-  nameGame.style('font-family', 'RightGrotesk');
-  nameGame.style('color', 'white');
-  nameGame.style('font-size', '32px');
-  nameGame.style('line-height', '1.1');
-  nameGame.style('margin', '0');
-  nameGame.position(30, 40); // Adjust as needed
-
-  // Underscore line below the heading
-  let underscore = createDiv();
-  underscore.style('width', '95px');         
-  underscore.style('height', '1px');
-  underscore.style('background-color', 'white');
-  underscore.position(30, 125);              
-  
-  // link buttons to carriers
-  discLink = createP("Metalen plaat");
-  discLink.style('font-family', 'RightGrotesk');
-  discLink.style('color', 'white');
-  discLink.style('text-decoration', 'underline');   
-  discLink.style('font-size', '26px'); // Adjust as needed
-  discLink.position(30, 230);
-  discLink.style('cursor', 'pointer');
-  discLink.mousePressed(() => {
-    window.location.href = "../disc/index.html";
-  });
-  
-  cylinderLink = createP("Cilinder");
-  cylinderLink.style('font-family', 'RightGrotesk');
-  cylinderLink.style('color', '#A8B69A');
-  cylinderLink.style('font-size', '26px'); // Adjust as needed
-  cylinderLink.position(30, 285);
-  cylinderLink.style('cursor', 'pointer');
-  cylinderLink.mousePressed(() => {
-    window.location.href = "../cylinder/index.html";
-  });  
-  
-  bookLink = createP("Orgelboek");
-  bookLink.style('font-family', 'RightGrotesk');
-  bookLink.style('color', '#A8B69A');
-  bookLink.style('font-size', '26px'); // Adjust as needed
-  bookLink.position(30, 340);
-  bookLink.style('cursor', 'pointer');
-  bookLink.mousePressed(() => {
-    window.location.href = "../book/index.html";
+  clearButton = createImg("images/bin_icon.jpg", "✖");
+  clearButton.size(60, 60);
+  clearButton.parent(rightPanel);
+  clearButton.mousePressed(() => {
+    initializePointsArray(true);
+    visualPoints = Array.from({ length: numRings + 1 }, () => 
+      new Array(numSegments).fill(false)
+    );
+    showPresetPoints = false; // Also turn off preset points display
+    presetButton.attribute('src', 'images/presetbutton_inactive.jpg'); // Reset button image
+    clearInstruments();
   });  
 
-  rollLink = createP("Papieren rol");
-  rollLink.style('font-family', 'RightGrotesk');
-  rollLink.style('color', '#A8B69A');
-  rollLink.style('font-size', '26px'); // Adjust as needed
-  rollLink.position(30, 395);
-  rollLink.style('cursor', 'pointer');
-  rollLink.mousePressed(() => {
-    window.location.href = "../roll/index.html";
-  });     
-  
-  speelkloklogo = createImg("images/speelklok_logo.png", "logo");
-  speelkloklogo.size(150, 65);
-  speelkloklogo.position(17, windowHeight-87);
-  speelkloklogo.mousePressed(() => {
-    window.location.href = "../../index_dutch.html";
-  });     
-  
-  // Language toggle
-  let isEnglish = false;
-  let languagetoggle = createP('<span style="color:white">NL</span><span style="color:#A8B69A"> / ENG</span>');
-  languagetoggle.style('font-family', 'RightGrotesk');
-  languagetoggle.style('font-size', '20px');
-  languagetoggle.style('line-height', '1.1');
-  languagetoggle.style('margin', '0');
-  languagetoggle.style('position', 'absolute');
-  languagetoggle.style('left', '30px');
-  languagetoggle.style('bottom', '130px');   
-  languagetoggle.style('cursor', 'pointer');
-  languagetoggle.mousePressed(() => {
-    // Toggle language
-    isEnglish = !isEnglish;
-  
-    if (isEnglish) {
-      languagetoggle.html('<span style="color:#A8B69A">NL / </span><span style="color:white">ENG</span>');
-      rollLink.html("Piano roll");
-	  discLink.html("Disc");
-	  bookLink.html("Organ book");
-	  cylinderLink.html("Cylinder");
-	  nameGame.html("Compose<br>a song");
-	  
-    } else {
-      languagetoggle.html('<span style="color:white">NL</span><span style="color:#A8B69A"> / ENG</span>');
-      rollLink.html("Papieren rol");
-	  discLink.html("Metalen plaat");
-	  bookLink.html("Orgelboek");
-	  cylinderLink.html("Cilinder");
-	  nameGame.html("Componeer<br>een lied");
-    }
-  });      
-  
+  // === Right panel buttons (horizontal) ===
   scaleButton = createImg("images/major_icon.jpg", "Scale");
   scaleButton.size(55, 55);
-  scaleButton.position(225,310);
-  scaleButton.mousePressed(cycleScale); 
+  scaleButton.parent(midPanel);
+  scaleButton.mousePressed(cycleScale);
 
-  // Create three instrument buttons
   for (let i = 0; i < instruments.length; i++) {
     let btn = createImg(instruments[i].icon, instruments[i].name);
     btn.size(75, 75);
-    btn.position(212, 50 + i * 80);
+    btn.parent(midPanel);
     btn.mousePressed(() => selectInstrument(i));
     instrumentButtons.push(btn);
   }
 
-  // Set initial instrument selection
-  selectInstrument(0);
-  
-  presetButton = createImg("images/presetbutton_inactive.jpg", "R")
+  presetButton = createImg("images/presetbutton_inactive.jpg", "R");
   presetButton.size(55, 50);
-  presetButton.position(225, 400);   
+  presetButton.parent(midPanel);
   presetButton.touchStarted(loadPresetSong);
 
   durationSlider = createSlider(100, 1000, 550);
@@ -418,12 +347,14 @@ function setup() {
   durationSlider.style("width", "60px");
   durationSlider.value(550);
   durationSlider.addClass("mySliders");
-  durationSlider.hide()
+  durationSlider.hide();
 
   graphics = createGraphics(windowWidth, windowHeight);
   drawConcentricCircles();
   drawButtonEllipses();
 }
+
+
 
 function draw() {
   background('#ECEFE9');
@@ -626,28 +557,6 @@ function playSound(buffer) {
   source.connect(gainNode);
   gainNode.connect(audioContext.destination);
   source.start(0);
-}
-
-function createPlayButton() {
-  playButton = createImg("images/play_icon.jpg", "▶");
-  playButton.size(55, 55);
-  playButton.position(322, 65);
-  playButton.mousePressed(togglePlayback);
-}
-
-function createClearButton() {
-  clearButton = createImg("images/bin_icon.jpg", "✖");
-  clearButton.size(60, 60);
-  clearButton.position(320, 160);
-  clearButton.mousePressed(() => {
-    initializePointsArray(true);
-    visualPoints = Array.from({ length: numRings + 1 }, () => 
-      new Array(numSegments).fill(false)
-    );
-    showPresetPoints = false; // Also turn off preset points display
-    presetButton.attribute('src', 'images/presetbutton_inactive.jpg'); // Reset button image
-    clearInstruments();
-  });
 }
 
 function playAllNotes(startSegmentIndex) {
