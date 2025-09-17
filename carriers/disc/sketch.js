@@ -336,6 +336,8 @@ function setup() {
     btn.mousePressed(() => selectInstrument(i));
     instrumentButtons.push(btn);
   }
+  // Set initial instrument selection
+  selectInstrument(0);  
 
   presetButton = createImg("images/presetbutton_inactive.jpg", "R");
   presetButton.size(55, 50);
