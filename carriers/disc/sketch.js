@@ -33,7 +33,7 @@ let individualInstrumentArray = new Array(37).fill(1);
 let startX, startY;
 let circleCenterX, circleCenterY, circleRadius;
 let points;
-let numRings = 15;
+let numRings = 11;
 let numSegments = 16;
 let duration = 550;
 
@@ -305,7 +305,7 @@ function setup() {
   // === Canvas graphics ===
   buttonGraphics = createGraphics(windowWidth, windowHeight);
   circleCenterX = windowWidth / 2;
-  circleCenterY = windowHeight / 1.7;
+  circleCenterY = windowHeight / 1.5;
   let baseRadius = Math.min(windowWidth, windowHeight) * 0.45;
   circleRadius = baseRadius;
   initializePointsArray();
@@ -748,7 +748,7 @@ function loadPresetSong() {
 
   if (showPresetPoints) {
     // Only load points when turning them on
-    numRings = 15;
+    numRings = 11;
     
     // Set to Major scale
     if (scaleMappings !== majorScale) {
