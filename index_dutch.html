@@ -260,16 +260,13 @@
 
   <!-- Script to handle sketch loading -->
   <script>
-    const { ipcRenderer } = require('electron');
-
-    document.querySelectorAll('.sketch-link').forEach(link => {
-      link.addEventListener('click', () => {
-        const sketchPath = link.getAttribute('data-sketch');
-        const loadingOverlay = document.getElementById('loading-overlay');
-        loadingOverlay.style.display = 'flex';
-        ipcRenderer.send('load-sketch', sketchPath);
-      });
+  document.querySelectorAll('.sketch-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const sketchPath = link.getAttribute('data-sketch');
+      // Navigate to the HTML file
+      window.location.href = sketchPath;
     });
+  });
   </script>
 </body>
 </html>
