@@ -77,7 +77,7 @@
 	.sketch-icons {
 	  display: grid;
 	  grid-template-columns: 1fr 1fr;
-	  gap: 15px;
+	  gap: 15px; /* This creates the vertical space between boxes */
 	  width: 100%;
 	  padding: 0 10px;
 	  box-sizing: border-box;
@@ -85,18 +85,20 @@
 	}
 
 	.sketch-link {
-	  display: block;               /* no flex */
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: center;
+	  /* REMOVE height: 100%; */
 	  font-family: 'Right Grotesk Medium', sans-serif;
-	  font-size: 100px;             /* your desired font size */
-	  line-height: 1.1;             /* tight line-height to fit text */
+	  font-size: 24px;
 	  text-align: center;
-	  padding: 10px 5px;            /* give a little breathing room */
-	  background-color: rgba(255,255,255,0.05);
+	  padding: 15px 5px;
+	  background-color: rgba(255, 255, 255, 0.05);
 	  border-radius: 8px;
 	  cursor: pointer;
-	  color: #A8B69A;
+	  color: #a8b69a;
 	  transition: transform 0.2s, background-color 0.2s;
-	  word-break: break-word;       /* keep multi-line text inside box */
 	}
 
     .sketch-link:hover {
