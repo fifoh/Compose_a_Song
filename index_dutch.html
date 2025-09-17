@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My p5.js Sketches</title>
+
+  <!-- Load custom fonts -->
+  <style>
+    @font-face {
+      font-family: 'Right Grotesk Wide Medium';
+      src: url('fonts/RightGrotesk-WideMedium.otf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Right Grotesk Medium';
+      src: url('fonts/RightGrotesk-Medium.otf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Montserrat SemiBold';
+      src: url('fonts/Montserrat-Medium.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* Global layout */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ADB99F;
+      min-width: 1000px;
+    }
+
+    #main-container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      background-color: #6B8D5C;
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding: 40px 10px 20px 10px;
+      box-sizing: border-box;
+    }
+
+    .sidebar-heading {
+      font-family: 'Right Grotesk Medium', sans-serif;
+      color: white;
+      font-size: 32px;
+      text-align: left;
+      padding-left: 20px;
+      line-height: 1.1;
+      margin-bottom: 40px;
+    }
+
+    .sidebar-heading .underscore {
+      width: 60%;
+      height: 1px;
+      background-color: white;
+      margin-top: 16px;
+    }
+
+    .home-icon {
+      margin-top: 16px;
+      margin-left: 2px;
+      width: 55px;
+      height: auto;
+      opacity: 0.85;
+    }
+
+    .sketch-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: flex-start;
+      padding-left: 20px;
+    }
+
+    .sketch-link {
+      font-family: 'Right Grotesk Medium', sans-serif;
+      font-size: 26px;
+      color: #A8B69A;
+      cursor: pointer;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      padding: 10px 0;
+      border-radius: 8px;
+      transition: transform 0.2s, background-color 0.2s;
+      text-align: left;
+      width: 100%;
+    }
+
+    .sketch-link:hover {
+      transform: scale(1.05);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sketch-link:focus {
+      outline: none;
+    }
+
+    .sidebar-logo {
+      margin-top: auto;
+      text-align: center;
+      padding-top: 20px;
+      padding-right: 15px;
+    }
+
+    .sidebar-logo img {
+      width: 150px;
+      height: auto;
+    }
+
+    /* Content area */
+    #content {
+      flex: 1;
+      padding: 80px 160px 80px 40px;
+    }
+
+    .instructions {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .instructions-title {
+      font-family: 'Right Grotesk Wide Medium', sans-serif;
+      font-size: 68px;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .instructions ul {
+      font-family: 'Montserrat SemiBold', sans-serif;
+      font-size: 28px;
+      list-style-position: outside;
+      padding-left: 20px;
+      color: white;
+    }
+
+    .instructions ul li {
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    /* Language toggle text */
+    .language-toggle {
+      position: absolute;
+      bottom: 130px;
+      left: 30px;
+      z-index: 100;
+      font-family: 'Right Grotesk Medium', sans-serif;
+      font-size: 20px;
+    }
+
+    .language-toggle a {
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .language-toggle .nl {
+      color: #A8B69A;
+    }
+
+    .language-toggle .eng {
+      color: white;
+    }
+
+    /* Loading overlay */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loader {
+      border: 12px solid #f3f3f3;
+      border-top: 12px solid #333;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Language toggle -->
+  <div class="language-toggle">
+    <a href="index.html">
+      <span class="eng">NL </span><span class="nl">/ ENG</span>
+    </a>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Main layout container -->
+  <div id="main-container">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <!-- Sidebar Heading -->
+      <div class="sidebar-heading">
+        Componeer<br>een lied
+        <div class="underscore"></div>
+        <img src="images/home_icon.png" alt="Home Icon" class="home-icon" />
+      </div>
+
+      <!-- Sidebar Links -->
+      <div class="sketch-icons">
+        <div class="sketch-link" data-sketch="carriers/disc/index.html">Metalen plaat</div>
+        <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cilinder</div>
+        <div class="sketch-link" data-sketch="carriers/book/index.html">Orgelboek</div>
+        <div class="sketch-link" data-sketch="carriers/roll/index.html">Papieren rol</div>
+      </div>
+
+      <!-- Logo at bottom-->
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="Logo" />
+      </div>
+
+    </div>
+
+    <!-- Main content -->
+    <div id="content">
+      <div class="instructions">
+        <div class="instructions-title">Wat ga je doen</div>
+        <ul>
+          <li>Kies een van de vier programmadragers</li>
+          <li>Plaats noten door op het scherm te klikken, en luister jouw liedje door op play te klikken</li>
+          <li>Wissel tussen instrumenten en toonladders door op de knoppen te klikken</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script to handle sketch loading -->
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    document.querySelectorAll('.sketch-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const sketchPath = link.getAttribute('data-sketch');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        loadingOverlay.style.display = 'flex';
+        ipcRenderer.send('load-sketch', sketchPath);
+      });
+    });
+  </script>
+</body>
+</html>

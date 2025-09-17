@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'RightGrotesk';
+  src: url('fonts/RightGrotesk-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+/* Optional: class for styled link text */
+.custom-link {
+  font-family: 'RightGrotesk', sans-serif;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}

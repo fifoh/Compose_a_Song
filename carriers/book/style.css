@@ -1,0 +1,122 @@
+@font-face {
+  font-family: 'RightGrotesk';
+  src: url('fonts/RightGrotesk-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Optional: class for styled link text */
+.custom-link {
+  font-family: 'RightGrotesk', sans-serif;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 400px; /* Sum of 200 + 100 + 100 from the three columns */
+}
+
+/* Main container for the three vertical columns */
+.buttons-vertical-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Left column */
+#button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  width: 200px;                /* Matches leftPanel width */
+  background-color: #6B8D5C;   /* Matches leftPanel color */
+  border-right: none;
+}
+
+/* Middle column */
+#button-container-middle {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  width: 100px;                /* Matches midPanel width */
+  background-color: #ADB99F;   /* Matches midPanel color */
+  border-right: none;
+}
+
+/* Right column */
+#button-container-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  width: 100px;                /* Matches rightPanel width */
+  background-color: #775989;   /* Matches rightPanel color */
+  border-right: none;
+  position: relative;          /* To position home button inside */
+}
+
+/* Home button */
+#home-button {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;                /* Adjusted to fit inside right column */
+  padding: 0px;
+  font-size: 110px;
+  background-color: transparent;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 10;
+  line-height: 1;
+}
+
+#home-button:hover {
+  color: #333;
+}
+
+#home-button::after {
+  content: "menu";
+  display: block;
+  font-size: 20px;
+  text-align: center;
+  margin-top: -10px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  canvas {
+    left: 400px;
+  }
+  
+  .buttons-vertical-container {
+    flex-direction: column;
+    width: 400px;
+    height: auto;
+  }
+  
+  #button-container, #button-container-middle, #button-container-bottom {
+    width: 100%;
+  }
+}

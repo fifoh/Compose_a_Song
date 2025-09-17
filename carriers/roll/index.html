@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">    
+  <script src="../../p5.min.js"></script>
+  <script src="../../p5.sound.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8" />
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden; /* Prevents scrollbars from appearing */
+    }
+
+    /* CSS to style the slider */
+    .slider-wrapper {
+      width: 200px; 
+      margin-top: 0px; 
+      margin-left: auto; 
+      margin-right: auto;
+    }
+
+    /* Minimal spinner styles - matches your other files */
+    #p5_loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ECEFE9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .simple-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(107, 141, 92, 0.2);
+      border-radius: 50%;
+      border-top-color: #6B8D5C;
+      animation: spin 0.7s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Removed all #back-button and .home-text styles */
+  </style>
+</head>
+<body>
+  <!-- Simple spinner (will auto-hide when p5 loads) -->
+  <div id="p5_loading">
+    <div class="simple-spinner"></div>
+  </div>
+
+  <main>
+    <!-- Container for the slider -->
+    <div class="slider-wrapper">
+      <!-- p5.js will insert the slider here -->
+    </div>
+  </main>
+  
+  <script src="sketch.js"></script>
+  
+  <!-- Removed the goBack() script since it's no longer needed -->
+</body>
+</html>

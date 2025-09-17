@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="height=device-height, 
+                      width=device-width, initial-scale=1.0, 
+                      minimum-scale=1.0, maximum-scale=1.0, 
+                      user-scalable=no, target-densitydpi=device-dpi">
+  <script src="../../p5.min.js"></script>
+  <script src="../../p5.sound.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8" />
+  <style>
+    /* Removed all #home-button related styles */
+    
+    /* Minimal spinner styles */
+    #p5_loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ECEFE9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .simple-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(107, 141, 92, 0.2);
+      border-radius: 50%;
+      border-top-color: #6B8D5C;
+      animation: spin 0.7s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Simple spinner that will auto-hide when p5 loads -->
+  <div id="p5_loading">
+    <div class="simple-spinner"></div>
+  </div>
+
+  <main>
+    <div class="slider-wrapper" id="slider-container"></div>
+
+    <div class="buttons-vertical-container">
+      <div class="button-wrapper" id="button-container">
+        <!-- Left column buttons go here -->
+      </div>
+
+      <div class="button-wrapper" id="button-container-middle">
+        <!-- Middle column buttons go here -->
+      </div>
+
+      <div class="button-wrapper" id="button-container-bottom">
+        <!-- Right column buttons go here (home button removed) -->
+      </div>
+    </div>
+  </main>
+
+  <script src="sketch.js"></script>
+</body>
+</html>
