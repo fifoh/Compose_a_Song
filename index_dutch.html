@@ -46,7 +46,7 @@
     /* Sidebar */
     #sidebar {
       background-color: #6B8D5C;
-      width: 200px;
+      width: 220px;
       display: flex;
       flex-direction: column;
       height: 100vh;
@@ -81,48 +81,40 @@
       opacity: 0.85;
     }
 
+    /* Sketch links grid */
     .sketch-icons {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      align-items: flex-start;
-      padding-left: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      width: 100%;
+      padding: 0 10px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
     }
 
     .sketch-link {
-      font-family: 'Right Grotesk Medium', sans-serif;
-      font-size: 26px;
-      color: #A8B69A;
-      cursor: pointer;
-      text-decoration: none;
-      background: transparent;
-      border: none;
-      padding: 10px 0;
+      background-color: rgba(255,255,255,0.05);
+      padding: 20px 10px;
       border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      font-family: 'Right Grotesk Medium', sans-serif;
+      font-size: 24px;
+      color: #A8B69A;
       transition: transform 0.2s, background-color 0.2s;
-      text-align: left;
-      width: 100%;
     }
 
     .sketch-link:hover {
       transform: scale(1.05);
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255,255,255,0.1);
     }
 
-    .sketch-link:focus {
-      outline: none;
-    }
-
-    /* Logo and language in sidebar */
-    #sidebar-bottom {
-      margin-top: auto;
-      padding-left: 20px;
-    }
-
+    /* Language toggle under grid */
     .language-toggle {
-      margin-top: 20px;
       font-family: 'Right Grotesk Medium', sans-serif;
       font-size: 20px;
+      margin-top: 20px;
+      text-align: center;
     }
 
     .language-toggle a {
@@ -233,9 +225,14 @@
         padding-left: 10px;
       }
 
+      .sketch-icons {
+        grid-template-columns: 1fr; /* single column on mobile */
+        gap: 10px;
+      }
+
       .sketch-link {
         font-size: 20px;
-        padding: 8px 0;
+        padding: 15px 10px;
       }
 
       .instructions-title {
@@ -279,19 +276,19 @@
         <img src="images/home_icon.png" alt="Home Icon" class="home-icon" />
       </div>
 
-      <!-- Sidebar Links -->
+      <!-- Sidebar Links in 2x2 grid -->
       <div class="sketch-icons">
         <div class="sketch-link" data-sketch="carriers/disc/index.html">Metalen plaat</div>
         <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cilinder</div>
         <div class="sketch-link" data-sketch="carriers/book/index.html">Orgelboek</div>
         <div class="sketch-link" data-sketch="carriers/roll/index.html">Papieren rol</div>
+      </div>
 
-        <!-- Language toggle under Papieren rol -->
-        <div class="language-toggle">
-          <a href="index.html">
-            <span class="eng">NL </span><span class="nl">/ ENG</span>
-          </a>
-        </div>
+      <!-- Language toggle under grid -->
+      <div class="language-toggle">
+        <a href="index.html">
+          <span class="eng">NL </span><span class="nl">/ ENG</span>
+        </a>
       </div>
     </div>
 
