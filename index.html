@@ -5,53 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My p5.js Sketches</title>
 
-  <!-- Load custom fonts -->
   <style>
     @font-face {
       font-family: 'Right Grotesk Wide Medium';
       src: url('fonts/RightGrotesk-WideMedium.otf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
     }
 
     @font-face {
       font-family: 'Right Grotesk Medium';
       src: url('fonts/RightGrotesk-Medium.otf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
     }
 
     @font-face {
       font-family: 'Montserrat SemiBold';
       src: url('fonts/Montserrat-Medium.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
     }
 
-    /* Global layout */
     body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
       background-color: #ADB99F;
-      min-width: 1000px;
     }
 
     #main-container {
       display: flex;
+      flex-direction: row;
       height: 100vh;
+      flex-wrap: wrap;
+      position: relative;
     }
 
     /* Sidebar */
-    #sidebar {
-      background-color: #6B8D5C;
-      width: 200px;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      padding: 40px 10px 20px 10px;
-      box-sizing: border-box;
-    }
+	#sidebar {
+	  background-color: #6B8D5C;
+	  width: 220px;
+	  display: flex;
+	  flex-direction: column;
+	  padding: 40px 10px 20px 10px;
+	  box-sizing: border-box;
+	  flex-shrink: 0;
+	  position: relative;
+	  /* REMOVE height: 100vh; */
+	}
 
     .sidebar-heading {
       font-family: 'Right Grotesk Medium', sans-serif;
@@ -78,54 +74,70 @@
       opacity: 0.85;
     }
 
-    .sketch-icons {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      align-items: flex-start;
-      padding-left: 20px;
-    }
+	.sketch-icons {
+	  display: grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap: 15px; /* This creates the vertical space between boxes */
+	  width: 100%;
+	  padding: 0 10px;
+	  box-sizing: border-box;
+	  margin-bottom: 20px;
+	}
 
-    .sketch-link {
-      font-family: 'Right Grotesk Medium', sans-serif;
-      font-size: 26px;
-      color: #A8B69A;
-      cursor: pointer;
-      text-decoration: none;
-      background: transparent;
-      border: none;
-      padding: 10px 0;
-      border-radius: 8px;
-      transition: transform 0.2s, background-color 0.2s;
-      text-align: left;
-      width: 100%;
-    }
+	.sketch-link {
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: center;
+	  /* REMOVE height: 100%; */
+	  font-family: 'Right Grotesk Medium', sans-serif;
+	  font-size: 24px;
+	  text-align: center;
+	  padding: 15px 5px;
+	  background-color: rgba(255, 255, 255, 0.05);
+	  border-radius: 8px;
+	  cursor: pointer;
+	  color: #a8b69a;
+	  transition: transform 0.2s, background-color 0.2s;
+	}
 
     .sketch-link:hover {
       transform: scale(1.05);
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255,255,255,0.1);
     }
 
-    .sketch-link:focus {
-      outline: none;
-    }
-
-    .sidebar-logo {
-      margin-top: auto;
+    /* Language toggle under grid */
+    .language-toggle {
+      font-family: 'Right Grotesk Medium', sans-serif;
+      font-size: 20px;
+      margin-top: 20px;
       text-align: center;
-      padding-top: 20px;
-      padding-right: 15px;
     }
 
-    .sidebar-logo img {
-      width: 150px;
-      height: auto;
+    .language-toggle a {
+      text-decoration: none;
+      cursor: pointer;
     }
+
+    .language-toggle .nl { color: #A8B69A; }
+    .language-toggle .eng { color: white; }
+
+    /* Museum logo top right */
+    .top-right-logo {
+      position: fixed;   /* fixed so always visible */
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      text-align: right;
+    }
+
+    .top-right-logo img { width: 150px; height: auto; }
 
     /* Content area */
     #content {
       flex: 1;
       padding: 80px 160px 80px 40px;
+      box-sizing: border-box;
     }
 
     .instructions {
@@ -153,36 +165,11 @@
       line-height: 1.6;
     }
 
-    /* Language toggle text */
-    .language-toggle {
-      position: absolute;
-      bottom: 130px;
-      left: 30px;
-      z-index: 100;
-      font-family: 'Right Grotesk Medium', sans-serif;
-      font-size: 20px;
-    }
-
-    .language-toggle a {
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .language-toggle .nl {
-      color: #A8B69A;
-    }
-
-    .language-toggle .eng {
-      color: white;
-    }
-
     /* Loading overlay */
     #loading-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background-color: white;
       z-index: 9999;
       display: none;
@@ -203,15 +190,34 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+      #main-container { flex-direction: column; height: auto; }
+
+      #sidebar { width: 100%; height: auto; padding: 20px 10px; }
+
+      #content { padding: 20px 10px; }
+
+      .sidebar-heading { font-size: 24px; padding-left: 10px; }
+
+      .sketch-link { font-size: 18px; }
+
+      .instructions-title { font-size: 36px; }
+
+      .instructions ul { font-size: 18px; }
+
+      .language-toggle { font-size: 16px; }
+
+      .top-right-logo img { width: 120px; }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Language toggle -->
-  <div class="language-toggle">
-    <a href="index_dutch.html">
-      <span class="nl">NL / </span><span class="eng">ENG</span>
-    </a>
+  <!-- Museum logo top right -->
+  <div class="top-right-logo">
+    <img src="images/logo.png" alt="Museum Logo NL/EN" />
   </div>
 
   <!-- Loading overlay -->
@@ -219,32 +225,31 @@
     <div class="loader"></div>
   </div>
 
-  <!-- Main layout container -->
+  <!-- Main container -->
   <div id="main-container">
     <!-- Sidebar -->
     <div id="sidebar">
-      <!-- Sidebar Heading -->
       <div class="sidebar-heading">
-        Compose<br>a song
+        Componeer<br>een lied
         <div class="underscore"></div>
         <img src="images/home_icon.png" alt="Home Icon" class="home-icon" />
       </div>
 
-      <!-- Sidebar Links -->
+      <!-- 2x2 grid -->
       <div class="sketch-icons">
-        <div class="sketch-link" data-sketch="carriers/disc/index.html">Disc</div>
-        <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cylinder</div>
-        <div class="sketch-link" data-sketch="carriers/book/index.html">Book</div>
-        <div class="sketch-link" data-sketch="carriers/roll/index.html">Piano Roll</div>
+        <div class="sketch-link" data-sketch="carriers/disc/index.html">Metalen<br>Plaat</div>
+        <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cilinder</div>
+        <div class="sketch-link" data-sketch="carriers/book/index.html">Orgelboek</div>
+        <div class="sketch-link" data-sketch="carriers/roll/index.html">Papieren<br>Rol</div>
       </div>
 
-      <!-- Logo at bottom-->
-      <div class="sidebar-logo">
-        <img src="images/logo.png" alt="Logo" />
+      <div class="language-toggle">
+        <a href="index.html">
+          <span class="eng">NL </span><span class="nl">/ ENG</span>
+        </a>
       </div>
-
     </div>
-
+    
     <!-- Main content -->
     <div id="content">
       <div class="instructions">
@@ -258,15 +263,12 @@
     </div>
   </div>
 
-  <!-- Script to handle sketch loading -->
   <script>
-  document.querySelectorAll('.sketch-link').forEach(link => {
-    link.addEventListener('click', () => {
-      const sketchPath = link.getAttribute('data-sketch');
-      // Navigate to the HTML file
-      window.location.href = sketchPath;
+    document.querySelectorAll('.sketch-link').forEach(link => {
+      link.addEventListener('click', () => {
+        window.location.href = link.getAttribute('data-sketch');
+      });
     });
-  });
   </script>
 </body>
 </html>
