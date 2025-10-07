@@ -819,9 +819,12 @@ function loadPresetSong() {
 
 function resizeCanvasToWindow() {
   resizeCanvas(windowWidth, windowHeight);
-  createEllipses();
+  circleCenterX = windowWidth / 2;
+  circleCenterY = windowHeight / 1.8;
+  let baseRadius = Math.min(windowWidth, windowHeight) * 0.4;
+  circleRadius = baseRadius;
+  innerCircleRadius = baseRadius * 0.6;
   redraw();
 }
-
 
 
