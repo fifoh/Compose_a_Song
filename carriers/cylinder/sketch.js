@@ -320,17 +320,6 @@ function setup() {
   // === Middle panel (horizontal buttons) ===
   midPanel = createDiv();
   midPanel.style('position', 'absolute');
-  midPanel.style('top', leftPanel.elt.offsetHeight + 'px');
-  midPanel.style('left', '0px');
-  midPanel.style('width', '100%');
-  midPanel.style('height', '60px'); // adjust
-  midPanel.style('background-color', '#ADB99F');
-  midPanel.style('display', 'flex');
-  midPanel.style('flex-direction', 'row');
-  midPanel.style('align-items', 'center');
-  midPanel.style('justify-content', 'flex-start');
-  midPanel.style('gap', '15px');
-  midPanel.style('padding', '10px');
   midPanel.style('bottom', '0px');
   midPanel.style('left', '0px');
   midPanel.style('width', '100%');
@@ -344,10 +333,6 @@ function setup() {
   // === Bottom panel (horizontal buttons) ===
   rightPanel = createDiv();
   rightPanel.style('position', 'absolute');
-  rightPanel.style('top', leftPanel.elt.offsetHeight + midPanel.elt.offsetHeight + 'px');
-  rightPanel.style('left', '0px');
-  rightPanel.style('width', '100%');
-  rightPanel.style('height', '70px'); // adjust
   rightPanel.style('top', leftPanel.elt.offsetHeight + 'px');
   rightPanel.style('left', '0px');
   rightPanel.style('width', '100%');
@@ -359,7 +344,6 @@ function setup() {
   rightPanel.style('justify-content', 'flex-start');
   rightPanel.style('gap', '25px');
   rightPanel.style('padding', '10px');   
-  rightPanel.style('padding', '10px');
 
   playButton = createImg("images/play_icon.jpg", "▶");
   playButton.size(55, 55);
@@ -979,5 +963,6 @@ function togglePresetSong() {
     presetButton.attribute("src", "images/presetbutton_inactive.jpg");
   }
 }
+
 
 
