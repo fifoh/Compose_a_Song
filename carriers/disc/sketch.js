@@ -248,13 +248,18 @@ function setup() {
   leftPanel.style('justify-content', 'space-between');
   leftPanel.style('padding', '10px 10px');
 
+<<<<<<< HEAD
   // Left side: Home + Name
+=======
+  // Left side: Home button
+>>>>>>> f4437ca (Updated sketches, styles, and index files)
   let topLeft = createDiv();
   topLeft.parent(leftPanel);
   topLeft.style('display', 'flex');
   topLeft.style('flex-direction', 'row');
   topLeft.style('align-items', 'center');
   topLeft.style('gap', '15px');
+<<<<<<< HEAD
 
   homeLink = createImg("images/home_icon.png", "Home");
   homeLink.size(55, 55);
@@ -289,6 +294,38 @@ function setup() {
   rightPanel.style('left', '0px');
   rightPanel.style('width', '100%');
   rightPanel.style('height', '70px'); // adjust
+=======
+
+  homeLink = createImg("images/home_icon.png", "Home");
+  homeLink.size(55, 55);
+  homeLink.parent(topLeft);
+  homeLink.style('opacity', '0.8');
+  homeLink.mousePressed(() => window.location.href = "../../index_dutch.html");
+
+  // Right side: Logo (aligned top right)
+  let topRight = createDiv();
+  topRight.parent(leftPanel);
+  topRight.style('display', 'flex');
+  topRight.style('flex-direction', 'row');
+  topRight.style('align-items', 'center');
+  topRight.style('justify-content', 'flex-end');
+  topRight.style('flex', '1'); // pushes it to the right
+  topRight.style('margin-right', '15px'); // padding from edge to avoid cutoff
+
+  speelkloklogo = createImg("images/speelklok_logo.png", "logo");
+  speelkloklogo.size(150, 65);
+  speelkloklogo.parent(topRight);
+  speelkloklogo.mousePressed(() => window.location.href = "../../index_dutch.html");
+
+
+// === Right panel (moved to below top panel, where midPanel was) ===
+  rightPanel = createDiv();
+  rightPanel.style('position', 'absolute');
+  rightPanel.style('top', leftPanel.elt.offsetHeight + 'px');
+  rightPanel.style('left', '0px');
+  rightPanel.style('width', '100%');
+  rightPanel.style('height', '60px'); // adjust
+>>>>>>> f4437ca (Updated sketches, styles, and index files)
   rightPanel.style('background-color', '#775989');
   rightPanel.style('display', 'flex');
   rightPanel.style('flex-direction', 'row');
@@ -296,7 +333,25 @@ function setup() {
   rightPanel.style('justify-content', 'flex-start');
   rightPanel.style('gap', '25px');
   rightPanel.style('padding', '10px');
+<<<<<<< HEAD
   
+=======
+
+// === Mid panel (now at the bottom of the screen) ===
+  midPanel = createDiv();
+  midPanel.style('position', 'absolute');
+  midPanel.style('bottom', '0px');
+  midPanel.style('left', '0px');
+  midPanel.style('width', '100%');
+  midPanel.style('height', '80px'); // adjust
+  midPanel.style('background-color', '#ADB99F');
+  midPanel.style('display', 'flex');
+  midPanel.style('align-items', 'center');
+  midPanel.style('justify-content', 'space-around');
+  midPanel.style('padding', '5px');
+  midPanel.style('box-sizing', 'border-box');
+
+>>>>>>> f4437ca (Updated sketches, styles, and index files)
   playButton = createImg("images/play_icon.jpg", "▶");
   playButton.size(55, 55);
   playButton.parent(rightPanel);
@@ -305,7 +360,11 @@ function setup() {
   // === Canvas graphics ===
   buttonGraphics = createGraphics(windowWidth, windowHeight);
   circleCenterX = windowWidth / 2;
+<<<<<<< HEAD
   circleCenterY = windowHeight / 1.5;
+=======
+  circleCenterY = windowHeight / 1.8;
+>>>>>>> f4437ca (Updated sketches, styles, and index files)
   let baseRadius = Math.min(windowWidth, windowHeight) * 0.45;
   circleRadius = baseRadius;
   initializePointsArray();
@@ -620,7 +679,7 @@ function togglePlayback() {
 function resizeCanvasToWindow() {
   resizeCanvas(windowWidth, windowHeight);
   circleCenterX = windowWidth / 2;
-  circleCenterY = windowHeight / 2;
+  circleCenterY = windowHeight / 1.8;
   let baseRadius = Math.min(windowWidth, windowHeight) * 0.4;
   circleRadius = baseRadius;
   innerCircleRadius = baseRadius * 0.6;
