@@ -259,31 +259,35 @@ let lastTouch = null;
 let touchMovedFlag = false;
 
 function touchStarted() {
-  // unlock audio
-  userStartAudio();
+  // Unlock audio on first touch if needed
+  if (getAudioContext().state !== 'running') {
+    userStartAudio().then(() => {
+      console.log('AudioContext started');
+    }).catch((err) => {
+      console.error('Error starting audio:', err);
+    });
+  }
 
-  // play a tiny silent sound to ensure audio context is running
-  let osc = new p5.Oscillator('sine');
-  osc.start();
-  osc.amp(0);
-  osc.stop('+0.01');
-
-  lastTouch = touches[0];
-  touchMovedFlag = false;
-
-  return false; // helps prevent default touch behavior on mobile
+  // Keep your existing touch logic intact
+  if (touches.length > 0) {
+    lastTouch = touches[0]; // Store last touch
+  }
+  touchMovedFlag = false; // Reset move flag
+  return true; // allow p5 to handle default behavior like dragging
 }
 
 function touchEnded() {
   if (!touchMovedFlag && lastTouch) {
     gridChanged = true;
 
-    let touch = lastTouch;
-    if (touch.x > rectX && touch.x < rectX + rectWidth &&
-        touch.y > rectY && touch.y < rectY + rectHeight) {
+    let touchX = lastTouch.x;
+    let touchY = lastTouch.y;
+
+    if (touchX > rectX && touchX < rectX + rectWidth &&
+        touchY > rectY && touchY < rectY + rectHeight) {
       
-      let col = floor((touch.x - rectX) / cellWidth);
-      let row = rows - 1 - floor((touch.y - rectY) / (cellHeight + 5));
+      let col = floor((touchX - rectX) / cellWidth);
+      let row = rows - 1 - floor((touchY - rectY) / (cellHeight + 5));
       
       if (grid[row][col]) {
         deleteCells(row, col);
@@ -295,9 +299,9 @@ function touchEnded() {
       }
     }
   }
-  
+
   lastTouch = null;
-  return false;
+  return true;
 }
 
 function touchMoved() {
@@ -808,4 +812,5 @@ function togglePreset() {
     clearGrid(); // Full reset
   }
 }
+
 
