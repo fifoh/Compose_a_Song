@@ -489,16 +489,18 @@ function draw() {
 }
 
 function touchStarted() {
-  // === Start audio context on first touch ===
   if (audioContext.state !== 'running') {
-    audioContext.resume().then(() => {
-      console.log('AudioContext resumed by direct user gesture:', audioContext.state);
+    userStartAudio().then(() => {
+      audioContext.resume().then(() => {
+        console.log('AudioContext resumed on mousePressed:', audioContext.state);
+      }).catch((err) => {
+        console.error('Error resuming AudioContext:', err);
+      });
     }).catch((err) => {
-      console.error('Error resuming AudioContext:', err);
+      console.error('Error starting user audio:', err);
     });
-  }
-
-  // === Handle touch logic ===
+  }  
+  
   if (touches.length > 0) {
     let touchX = touches[0].x;
     let touchY = touches[0].y;
@@ -532,8 +534,6 @@ function touchStarted() {
       }
     }
   }
-
-  return false; // Prevent scroll on mobile
 }
 
 function getClosestQuantizedIndices(x, y) {
@@ -826,6 +826,3 @@ function resizeCanvasToWindow() {
   innerCircleRadius = baseRadius * 0.6;
   redraw();
 }
-
-
-
