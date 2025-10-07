@@ -255,6 +255,7 @@ function setup() {
 
   canvas.touchStarted(() => {
     initializeAudio();  
+  }
 
   // === Top panel (home, name, logo, language toggle) ===
   leftPanel = createDiv();
@@ -849,6 +850,7 @@ function loadPresetSong() {
   ellipseButtons = [];
   drawButtonEllipses();
 }
+
 
 
 
