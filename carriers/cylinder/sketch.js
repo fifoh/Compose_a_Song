@@ -299,9 +299,6 @@ function setup() {
   homeLink.style('opacity', '0.8');
   homeLink.mousePressed(() => window.location.href = "../../index_dutch.html");
 
-  speelkloklogo = createImg("images/speelklok_logo.png", "logo");
-  speelkloklogo.size(150, 65);
-  speelkloklogo.parent(topLeft);
   // Right side: Logo (aligned top right)
   let topRight = createDiv();
   topRight.parent(leftPanel);
@@ -963,6 +960,7 @@ function togglePresetSong() {
     presetButton.attribute("src", "images/presetbutton_inactive.jpg");
   }
 }
+
 
 
 
