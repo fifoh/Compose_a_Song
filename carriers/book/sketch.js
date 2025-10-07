@@ -80,7 +80,7 @@ let columnDuration = totalAnimationTime / cols;
 
 // Audio
 let audioBuffers = [];
-let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let audioContext;
 let bufferLoader;
 
 function BufferLoader(context, urlList, callback) {
@@ -129,11 +129,7 @@ BufferLoader.prototype.load = function() {
 
 function preload() {
   rightGrotesk = loadFont('fonts/RightGrotesk-Medium.otf');		
-  audioContext = new (window.AudioContext || window.webkitAudioContext)();
   loadAudioSet(individualInstrumentArray);
-  audioContext.suspend().then(() => {
-    console.log('AudioContext state in preload:', audioContext.state);
-  });  
 }
 
 function loadAudioSet(individualInstrumentArray) {
@@ -259,22 +255,16 @@ let lastTouch = null;
 let touchMovedFlag = false;
 
 function touchStarted() {
-  
-  if (audioContext.state !== 'running') {
-    userStartAudio().then(() => {
-      audioContext.resume().then(() => {
-        console.log('AudioContext resumed on mousePressed:', audioContext.state);
-      }).catch((err) => {
-        console.error('Error resuming AudioContext:', err);
-      });
-    }).catch((err) => {
-      console.error('Error starting user audio:', err);
-    });
-  }  
-  
-  lastTouch = touches[0]; // Store the last touch information
-  touchMovedFlag = false; // Reset the flag
-  return true; // Prevent any default behavior on touch start
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    audioContext.resume().then(() => {
+      console.log('AudioContext resumed on first touch:', audioContext.state);
+    }).catch(err => console.error(err));
+  }
+
+  lastTouch = touches[0];
+  touchMovedFlag = false;
+  return true;
 }
 
 function touchEnded() {
@@ -817,6 +807,7 @@ function togglePreset() {
     clearGrid(); // Full reset
   }
 }
+
 
 
 
