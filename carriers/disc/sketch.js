@@ -262,11 +262,6 @@ function setup() {
   homeLink.style('opacity', '0.8');
   homeLink.mousePressed(() => window.location.href = "../../index_dutch.html");
 
-  speelkloklogo = createImg("images/speelklok_logo.png", "logo");
-  speelkloklogo.size(150, 65);
-  speelkloklogo.parent(topLeft);
-  speelkloklogo.mousePressed(() => window.location.href = "../../index_dutch.html");
-
   // === Middle panel (horizontal buttons) ===
   midPanel = createDiv();
   midPanel.style('position', 'absolute');
@@ -838,4 +833,5 @@ function loadPresetSong() {
   ellipseButtons = [];
   drawButtonEllipses();
 }
+
 
