@@ -1,44 +1,41 @@
-let audioContext;
+📄 sketch.js
 let startButton;
+let osc;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background('#ecefe9');
+  textAlign(CENTER, CENTER);
+  textSize(24);
+  text('Tap the button to start sound', width / 2, height / 2 - 60);
 
-  // Create the AudioContext (won’t start until user gesture)
-  audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-  // Create a p5 button to start audio
+  // Create the button in p5
   startButton = createButton('🔊 Tap to Start');
   startButton.style('font-size', '2rem');
   startButton.style('padding', '1em 2em');
   startButton.style('border', 'none');
   startButton.style('background', '#dcd9cf');
   startButton.style('border-radius', '12px');
-  startButton.position(windowWidth / 2 - 120, windowHeight / 2 - 40);
+  startButton.center();
   startButton.mousePressed(startAudio);
 }
 
-async function startAudio() {
-  // Resume the AudioContext on user gesture
-  if (audioContext.state !== 'running') {
-    await audioContext.resume();
-  }
+function startAudio() {
+  // Resume p5’s audio context (required on mobile)
+  userStartAudio().then(() => {
+    console.log('Audio context started.');
 
-  // Play a short tone
-  const osc = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-  gain.gain.value = 0.2;
-  osc.connect(gain).connect(audioContext.destination);
-  osc.type = 'sine';
-  osc.frequency.value = 440; // A4
-  osc.start();
-  osc.stop(audioContext.currentTime + 1); // 1 second tone
+    // Create and play a 1-second sine tone
+    osc = new p5.Oscillator('sine');
+    osc.freq(440);
+    osc.amp(0.2);
+    osc.start();
+    setTimeout(() => {
+      osc.stop();
+    }, 1000);
 
-  console.log('✅ Audio played!');
-  startButton.remove(); // Remove the button after activation
-}
-
-function draw() {
-  // optional: add visuals if you want
+    startButton.remove(); // remove button after start
+    background('#cde0b8');
+    text('✅ You should hear a tone!', width / 2, height / 2);
+  });
 }
