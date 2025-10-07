@@ -586,10 +586,6 @@ function clearInstruments() {
 }
 
 function playSound(buffer) {
-  console.log('--- playSound called ---');
-  console.log('AudioContext state:', audioContext?.state);
-  console.log('Buffer exists:', !!buffer);
-  
   let source = audioContext.createBufferSource();
   source.buffer = buffer;
   let gainNode = audioContext.createGain();
@@ -831,4 +827,5 @@ function loadPresetSong() {
   ellipseButtons = [];
   drawButtonEllipses();
 }
+
 
