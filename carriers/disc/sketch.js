@@ -650,17 +650,6 @@ function togglePlayback() {
     playButton.attribute("disabled", "");
   }
 }
-
-function resizeCanvasToWindow() {
-  resizeCanvas(windowWidth, windowHeight);
-  circleCenterX = windowWidth / 2;
-  circleCenterY = windowHeight / 1.8;
-  let baseRadius = Math.min(windowWidth, windowHeight) * 0.4;
-  circleRadius = baseRadius;
-  innerCircleRadius = baseRadius * 0.6;
-  redraw();
-}
-
 function drawConcentricCircles() {
   graphics.clear();
   graphics.noFill();
@@ -827,5 +816,6 @@ function loadPresetSong() {
   ellipseButtons = [];
   drawButtonEllipses();
 }
+
 
 
