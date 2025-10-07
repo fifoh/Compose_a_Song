@@ -817,6 +817,11 @@ function loadPresetSong() {
   drawButtonEllipses();
 }
 
+function resizeCanvasToWindow() {
+  resizeCanvas(windowWidth, windowHeight);
+  createEllipses();
+  redraw();
+}
 
 
 
