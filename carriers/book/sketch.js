@@ -259,36 +259,40 @@ let lastTouch = null;
 let touchMovedFlag = false;
 
 function touchStarted() {
-  // Unlock audio on first touch if needed
-  if (getAudioContext().state !== 'running') {
+  
+  if (audioContext.state !== 'running') {
     userStartAudio().then(() => {
-      console.log('AudioContext started');
+      audioContext.resume().then(() => {
+        console.log('AudioContext resumed on mousePressed:', audioContext.state);
+      }).catch((err) => {
+        console.error('Error resuming AudioContext:', err);
+      });
     }).catch((err) => {
-      console.error('Error starting audio:', err);
+      console.error('Error starting user audio:', err);
     });
-  }
-
-  // Keep your existing touch logic intact
-  if (touches.length > 0) {
-    lastTouch = touches[0]; // Store last touch
-  }
-  touchMovedFlag = false; // Reset move flag
-  return true; // allow p5 to handle default behavior like dragging
+  }  
+  
+  lastTouch = touches[0]; // Store the last touch information
+  touchMovedFlag = false; // Reset the flag
+  return true; // Prevent any default behavior on touch start
 }
 
 function touchEnded() {
   if (!touchMovedFlag && lastTouch) {
     gridChanged = true;
-
+    if (getAudioContext().state !== 'running') {
+      getAudioContext().resume();
+    }
+    
     let touchX = lastTouch.x;
     let touchY = lastTouch.y;
-
-    if (touchX > rectX && touchX < rectX + rectWidth &&
-        touchY > rectY && touchY < rectY + rectHeight) {
-      
-      let col = floor((touchX - rectX) / cellWidth);
-      let row = rows - 1 - floor((touchY - rectY) / (cellHeight + 5));
-      
+    let adjustedtouchX = touchX - rectX;
+    let adjustedtouchY = touchY - rectY;
+    let touch = lastTouch;
+    let buttonClicked = false;
+    if (touch.x > rectX && touch.x < rectX + rectWidth && touch.y > rectY && touch.y < rectY + rectHeight) {
+      let col = floor((touch.x - rectX) / cellWidth);
+      let row = rows - 1 - floor((touch.y - rectY) / (cellHeight + 5));
       if (grid[row][col]) {
         deleteCells(row, col);
       } else {
@@ -298,12 +302,13 @@ function touchEnded() {
         dragging = true;
       }
     }
+    
+    gridChanged = true;
   }
-
-  lastTouch = null;
+  
+  lastTouch = null; // Clear the stored touch information
   return true;
 }
-
 function touchMoved() {
   lastTouch = touches[0]; // Update the last touch information
   touchMovedFlag = true; // Set the flag to true indicating touch moved
@@ -812,5 +817,6 @@ function togglePreset() {
     clearGrid(); // Full reset
   }
 }
+
 
 
