@@ -47,7 +47,7 @@ let selectedInstrument = 0; // 0 = Comb, 1 = Piano, 2 = Bells
 
 let audioBuffers = [];
 let timeouts = [];
-let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let audioInitialized = false;
 let bufferLoader;
 let startTime;
 let playButton;
@@ -102,12 +102,35 @@ BufferLoader.prototype.load = function () {
 
 function preload() {
   rightGrotesk = loadFont('fonts/RightGrotesk-Medium.otf');	
+  
+  // Create AudioContext only once
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  
+  // Load audio files
   loadAudioSet(individualInstrumentArray);
-  audioContext.suspend().then(() => {
-    console.log('AudioContext state in preload:', audioContext.state);
-  });  
+  
+  // Suspend initially - will resume on user interaction
+  if (audioContext.state !== 'suspended') {
+    audioContext.suspend().then(() => {
+      console.log('AudioContext suspended in preload:', audioContext.state);
+    });
+  }
 } 
+
+function initializeAudio() {
+  if (!audioInitialized && audioContext) {
+    if (audioContext.state === 'suspended') {
+      audioContext.resume().then(() => {
+        console.log('AudioContext resumed:', audioContext.state);
+        audioInitialized = true;
+      }).catch(err => {
+        console.error('Failed to resume AudioContext:', err);
+      });
+    } else if (audioContext.state === 'running') {
+      audioInitialized = true;
+    }
+  }
+}
 
 // Load audio set
 function loadAudioSet(individualInstrumentArray) {
@@ -226,13 +249,12 @@ let currentScaleName = "major"; // Track current scale name
 let leftPanel, midPanel, rightPanel;
 
 function setup() {
-  audioContext.suspend().then(() => {
-    console.log('AudioContext suspended in setup:', audioContext.state);
-  }).catch((err) => console.error('Error suspending AudioContext:', err));
-
   createCanvas(windowWidth, windowHeight);
   window.addEventListener("resize", resizeCanvasToWindow);
   frameRate(60);
+
+  canvas.touchStarted(() => {
+    initializeAudio();  
 
   // === Top panel (home, name, logo, language toggle) ===
   leftPanel = createDiv();
@@ -827,6 +849,7 @@ function loadPresetSong() {
   ellipseButtons = [];
   drawButtonEllipses();
 }
+
 
 
 
