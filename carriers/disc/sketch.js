@@ -247,19 +247,14 @@ function setup() {
   leftPanel.style('align-items', 'center');
   leftPanel.style('justify-content', 'space-between');
   leftPanel.style('padding', '10px 10px');
-
-<<<<<<< HEAD
-  // Left side: Home + Name
-=======
+  
   // Left side: Home button
->>>>>>> f4437ca (Updated sketches, styles, and index files)
   let topLeft = createDiv();
   topLeft.parent(leftPanel);
   topLeft.style('display', 'flex');
   topLeft.style('flex-direction', 'row');
   topLeft.style('align-items', 'center');
   topLeft.style('gap', '15px');
-<<<<<<< HEAD
 
   homeLink = createImg("images/home_icon.png", "Home");
   homeLink.size(55, 55);
@@ -294,7 +289,6 @@ function setup() {
   rightPanel.style('left', '0px');
   rightPanel.style('width', '100%');
   rightPanel.style('height', '70px'); // adjust
-=======
 
   homeLink = createImg("images/home_icon.png", "Home");
   homeLink.size(55, 55);
@@ -325,7 +319,6 @@ function setup() {
   rightPanel.style('left', '0px');
   rightPanel.style('width', '100%');
   rightPanel.style('height', '60px'); // adjust
->>>>>>> f4437ca (Updated sketches, styles, and index files)
   rightPanel.style('background-color', '#775989');
   rightPanel.style('display', 'flex');
   rightPanel.style('flex-direction', 'row');
@@ -333,9 +326,6 @@ function setup() {
   rightPanel.style('justify-content', 'flex-start');
   rightPanel.style('gap', '25px');
   rightPanel.style('padding', '10px');
-<<<<<<< HEAD
-  
-=======
 
 // === Mid panel (now at the bottom of the screen) ===
   midPanel = createDiv();
@@ -351,7 +341,6 @@ function setup() {
   midPanel.style('padding', '5px');
   midPanel.style('box-sizing', 'border-box');
 
->>>>>>> f4437ca (Updated sketches, styles, and index files)
   playButton = createImg("images/play_icon.jpg", "▶");
   playButton.size(55, 55);
   playButton.parent(rightPanel);
@@ -360,11 +349,8 @@ function setup() {
   // === Canvas graphics ===
   buttonGraphics = createGraphics(windowWidth, windowHeight);
   circleCenterX = windowWidth / 2;
-<<<<<<< HEAD
   circleCenterY = windowHeight / 1.5;
-=======
   circleCenterY = windowHeight / 1.8;
->>>>>>> f4437ca (Updated sketches, styles, and index files)
   let baseRadius = Math.min(windowWidth, windowHeight) * 0.45;
   circleRadius = baseRadius;
   initializePointsArray();
@@ -852,3 +838,4 @@ function loadPresetSong() {
   ellipseButtons = [];
   drawButtonEllipses();
 }
+
