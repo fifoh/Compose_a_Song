@@ -249,7 +249,6 @@ let minorScale = {
 }
 
 let xoffset_cylinder = 0; // offset for center
-let y_offset_cylinder = 70;
 let y_offset_cylinder = 0;
 
 // default scale mapping
@@ -287,7 +286,6 @@ function setup() {
   leftPanel.style('padding', '10px 10px');
   
   // Left side: Home + Name
-  // Left side: Home button
   let topLeft = createDiv();
   topLeft.parent(leftPanel);
   topLeft.style('display', 'flex');
@@ -981,4 +979,5 @@ function togglePresetSong() {
     presetButton.attribute("src", "images/presetbutton_inactive.jpg");
   }
 }
+
 
