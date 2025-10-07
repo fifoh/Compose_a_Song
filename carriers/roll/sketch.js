@@ -3,7 +3,7 @@ let addButton, removeButton;
 let helpButton;
 let helpDiv;
 
-let offsetX_OVERALL = 250;
+let offsetX_OVERALL = 0;
 
 let touchMovedOccurred = false;
 let previousTouchY;
@@ -257,173 +257,99 @@ function setup() {
   window.addEventListener('resize', resizeCanvasToWindow);
   frameRate(60);
   
-  // === Create left panel ===
+  // === Top panel (home, name, logo, language toggle) ===
   leftPanel = createDiv();
   leftPanel.style('position', 'absolute');
   leftPanel.style('top', '0px');
   leftPanel.style('left', '0px');
-  leftPanel.style('width', '200px');
-  leftPanel.style('height', windowHeight + 'px');
+  leftPanel.style('width', '100%');
+  leftPanel.style('height', '70px'); // adjust height
   leftPanel.style('background-color', '#6B8D5C');
   leftPanel.style('display', 'flex');
-  leftPanel.style('flex-direction', 'column');
-  leftPanel.style('padding', '0px');
-  leftPanel.style('gap', '0px');
-
-  // === Create mid panel ===
-  midPanel = createDiv();
-  midPanel.style('position', 'absolute');
-  midPanel.style('top', '0px');
-  midPanel.style('left', '200px');
-  midPanel.style('width', '100px');
-  midPanel.style('height', windowHeight + 'px');
-  midPanel.style('background-color', '#ADB99F');
-  midPanel.style('display', 'flex');
-  midPanel.style('flex-direction', 'column');
-  midPanel.style('padding', '0px');
-  midPanel.style('gap', '0px');  
-
-  // === Create right panel ===
-  rightPanel = createDiv();
-  rightPanel.style('position', 'absolute');
-  rightPanel.style('top', '0px');
-  rightPanel.style('left', '300px');
-  rightPanel.style('width', '100px');
-  rightPanel.style('height', windowHeight + 'px');
-  rightPanel.style('background-color', '#775989');
-  rightPanel.style('display', 'flex');
-  rightPanel.style('flex-direction', 'column');
-  rightPanel.style('padding', '0px');
-  rightPanel.style('gap', '0px');    
+  leftPanel.style('flex-direction', 'row'); // horizontal buttons
+  leftPanel.style('align-items', 'center');
+  leftPanel.style('justify-content', 'space-between');
+  leftPanel.style('padding', '10px 10px');
   
-  // HOME BUTTON
+  // Left side: Home button
+  let topLeft = createDiv();
+  topLeft.parent(leftPanel);
+  topLeft.style('display', 'flex');
+  topLeft.style('flex-direction', 'row');
+  topLeft.style('align-items', 'center');
+  topLeft.style('gap', '15px');
+
   homeLink = createImg("images/home_icon.png", "Home");
   homeLink.size(55, 55);
-  homeLink.position(32, 145);
+  homeLink.parent(topLeft);
   homeLink.style('opacity', '0.8');
-  homeLink.mousePressed(() => {
-    window.location.href = "../../index_dutch.html";
-  });   
-  
-  // "Name game" heading
-  let nameGame = createP("Componeer<br>een lied");
-  nameGame.style('font-family', 'RightGrotesk');
-  nameGame.style('color', 'white');
-  nameGame.style('font-size', '32px');
-  nameGame.style('line-height', '1.1');
-  nameGame.style('margin', '0');
-  nameGame.position(30, 40); // Adjust as needed
+  homeLink.mousePressed(() => window.location.href = "../../index_dutch.html");
 
-  // Underscore line below the heading
-  let underscore = createDiv();
-  underscore.style('width', '95px');         
-  underscore.style('height', '1px');
-  underscore.style('background-color', 'white');
-  underscore.position(30, 125);              
-  
-  // link buttons to carriers
-  discLink = createP("Metalen plaat");
-  discLink.style('font-family', 'RightGrotesk');
-  discLink.style('color', '#A8B69A');
-  discLink.style('font-size', '26px'); // Adjust as needed
-  discLink.position(30, 230);
-  discLink.style('cursor', 'pointer');
-  discLink.mousePressed(() => {
-    window.location.href = "../disc/index.html";
-  });
-  
-  cylinderLink = createP("Cilinder");
-  cylinderLink.style('font-family', 'RightGrotesk');
-  cylinderLink.style('color', '#A8B69A');
-  cylinderLink.style('font-size', '26px'); // Adjust as needed
-  cylinderLink.position(30, 285);
-  cylinderLink.style('cursor', 'pointer');
-  cylinderLink.mousePressed(() => {
-    window.location.href = "../cylinder/index.html";
-  });  
-  
-  bookLink = createP("Orgelboek");
-  bookLink.style('font-family', 'RightGrotesk');
-  bookLink.style('color', '#A8B69A');
-  bookLink.style('font-size', '26px'); // Adjust as needed
-  bookLink.position(30, 340);
-  bookLink.style('cursor', 'pointer');
-  bookLink.mousePressed(() => {
-    window.location.href = "../book/index.html";
-  });  
+  // Right side: Logo (aligned top right)
+  let topRight = createDiv();
+  topRight.parent(leftPanel);
+  topRight.style('display', 'flex');
+  topRight.style('flex-direction', 'row');
+  topRight.style('align-items', 'center');
+  topRight.style('justify-content', 'flex-end');
+  topRight.style('flex', '1'); // pushes it to the right
+  topRight.style('margin-right', '15px'); // padding from edge to avoid cutoff
 
-  rollLink = createP("Papieren rol");
-  rollLink.style('font-family', 'RightGrotesk');
-  rollLink.style('color', 'white');
-  rollLink.style('text-decoration', 'underline');
-  rollLink.style('font-size', '26px'); // Adjust as needed
-  rollLink.position(30, 395);
-  rollLink.style('cursor', 'pointer');
-  rollLink.mousePressed(() => {
-    window.location.href = "../roll/index.html";
-  });     
-  
   speelkloklogo = createImg("images/speelklok_logo.png", "logo");
   speelkloklogo.size(150, 65);
-  speelkloklogo.position(17, windowHeight-87);
-  speelkloklogo.mousePressed(() => {
-    window.location.href = "../../index_dutch.html";
-  });     
-  
-  // Language toggle
-  let isEnglish = false;
-  let languagetoggle = createP('<span style="color:white">NL</span><span style="color:#A8B69A"> / ENG</span>');
-  languagetoggle.style('font-family', 'RightGrotesk');
-  languagetoggle.style('font-size', '20px');
-  languagetoggle.style('line-height', '1.1');
-  languagetoggle.style('margin', '0');
-  languagetoggle.style('position', 'absolute');
-  languagetoggle.style('left', '30px');
-  languagetoggle.style('bottom', '130px');   
-  languagetoggle.style('cursor', 'pointer');
-  languagetoggle.mousePressed(() => {
-    // Toggle language
-    isEnglish = !isEnglish;
-  
-    if (isEnglish) {
-      languagetoggle.html('<span style="color:#A8B69A">NL / </span><span style="color:white">ENG</span>');
-      rollLink.html("Piano roll");
-	  discLink.html("Disc");
-	  bookLink.html("Organ book");
-	  cylinderLink.html("Cylinder");
-	  nameGame.html("Compose<br>a song");
-	  
-    } else {
-      languagetoggle.html('<span style="color:white">NL</span><span style="color:#A8B69A"> / ENG</span>');
-      rollLink.html("Papieren rol");
-	  discLink.html("Metalen plaat");
-	  bookLink.html("Orgelboek");
-	  cylinderLink.html("Cilinder");
-	  nameGame.html("Componeer<br>een lied");
-    }
-  });      
-    
-  clearButton = createImg('images/bin_icon.jpg', '✖');
-  clearButton.size(60, 60);
-  clearButton.position(320, 160);
-  clearButton.touchStarted(clearNotes);
+  speelkloklogo.parent(topRight);
+  speelkloklogo.mousePressed(() => window.location.href = "../../index_dutch.html");  
+
+  // === Middle panel (horizontal buttons) ===
+  midPanel = createDiv();
+  midPanel.style('position', 'absolute');
+  midPanel.style('bottom', '0px');
+  midPanel.style('left', '0px');
+  midPanel.style('width', '100%');
+  midPanel.style('height', '80px'); // adjust
+  midPanel.style('background-color', '#ADB99F');
+  midPanel.style('display', 'flex');
+  midPanel.style('align-items', 'center');
+  midPanel.style('justify-content', 'space-around');
+  midPanel.style('padding', '5px');
+  midPanel.style('box-sizing', 'border-box');
+
+  // === Bottom panel (horizontal buttons) ===
+  rightPanel = createDiv();
+  rightPanel.style('position', 'absolute');
+  rightPanel.style('top', leftPanel.elt.offsetHeight + 'px');
+  rightPanel.style('left', '0px');
+  rightPanel.style('width', '100%');
+  rightPanel.style('height', '60px'); // adjust
+  rightPanel.style('background-color', '#775989');
+  rightPanel.style('display', 'flex');
+  rightPanel.style('flex-direction', 'row');
+  rightPanel.style('align-items', 'center');
+  rightPanel.style('justify-content', 'flex-start');
+  rightPanel.style('gap', '25px');
+  rightPanel.style('padding', '10px');   
 
   // Create the play/stop button
   playStopButton = createImg('images/play_icon.jpg', '▶');
   playStopButton.size(55, 55); 
-  playStopButton.position(322, 65); 
+  playStopButton.parent(rightPanel);
   playStopButton.touchStarted(togglePlayStop);
+  
+  clearButton = createImg('images/bin_icon.jpg', '✖');
+  clearButton.size(60, 60);
+  clearButton.parent(rightPanel);
+  clearButton.touchStarted(clearNotes);  
 
   scaleButton = createImg("images/major_icon.jpg", "Scale");
   scaleButton.size(55, 55);
-  scaleButton.position(225,310);
+  scaleButton.parent(midPanel);
   scaleButton.mousePressed(cycleScale);
 
   // Create three instrument buttons
   for (let i = 0; i < instruments.length; i++) {
     let btn = createImg(instruments[i].icon, instruments[i].name);
     btn.size(75, 75);
-    btn.position(212, 50 + i * 80);
+    btn.parent(midPanel);
     btn.mousePressed(() => selectInstrument(i));
     instrumentButtons.push(btn);
   }
@@ -433,7 +359,7 @@ function setup() {
   
   presetButton = createImg("images/presetbutton_inactive.jpg", "R")
   presetButton.size(55, 50);
-  presetButton.position(225, 400); 
+  presetButton.parent(midPanel); 
   presetButton.touchStarted(loadPresetSong);   
   
   let sliderWrapper = select('.slider-wrapper');
@@ -453,7 +379,7 @@ function setup() {
   buffer.background('#ECEFE9');
   buffer.fill(180, 180, 180, 80);
   buffer.noStroke();
-  buffer.rect(windowWidth*0.2 + offsetX_OVERALL, windowHeight*0.36, windowWidth *0.5, windowHeight*0.4, 10);
+  buffer.rect(windowWidth*0.05 + offsetX_OVERALL, windowHeight*0.36, windowWidth *0.89, windowHeight*0.4, 10);
   
   // was 0.05, 0.36, 0.89, 0.476, 10
   
@@ -462,11 +388,11 @@ function setup() {
   buffer.noFill();
   buffer.rect(0, 0, windowWidth, windowHeight);
   
-  let rectWidth = windowWidth * 0.5;
+  let rectWidth = windowWidth * 0.89;
   let rectHeight = windowHeight * 0.4;
   
   textureBuffer = createGraphics(rectWidth, rectHeight);
-  let rectX = windowWidth * 0.2;
+  let rectX = windowWidth * 0.05;
   let rectY = windowHeight * 0.36;
   textureBuffer.noStroke();
   
@@ -477,9 +403,9 @@ function draw() {
   background('#ECEFE9');
   image(buffer, 0, 0);
   
-  let rectX = windowWidth * 0.2;
+  let rectX = windowWidth * 0.05;
   let rectY = windowHeight * 0.36;
-  let rectWidth = windowWidth * 0.5;
+  let rectWidth = windowWidth * 0.89;
   let rectHeight = windowHeight * 0.4;  
   
   // was 0.05; 0.36; 0.89; 0.476;   
@@ -501,7 +427,7 @@ function draw() {
     textureBuffer.rect(0, y, textureBuffer.width, 5);
   }
   push();
-  translate(windowWidth * 0.2 + offsetX_OVERALL, windowHeight * 0.36);
+  translate(windowWidth * 0.05 + offsetX_OVERALL, windowHeight * 0.36);
   copy(textureBuffer, 0, 0, round(textureBuffer.width), round(textureBuffer.height), 0, 0, round(textureBuffer.width), round(textureBuffer.height));
   pop();
   
@@ -569,11 +495,9 @@ function draw() {
     }
   }  
 
-  let baseX = windowWidth * 0.23; // Original base position without offset
-  let spacing = (windowWidth - baseX * 2.44) / (numEllipses - 1); // Calculate spacing based on original layout
-  
-  // Apply offset after calculating spacing
-  let firstEllipseX = baseX + offsetX_OVERALL;
+  // Calculate the initial spacing for ellipses
+  let firstEllipseX = windowWidth * 0.12; // 10% of windowWidth
+  let spacing = (windowWidth - firstEllipseX * 2) / (numEllipses - 1);
   
   for (let i = 0; i < numEllipses; i++) {
     let ellipseData = ellipses[i];
@@ -585,9 +509,9 @@ function draw() {
     stroke(barColors[i]);
     strokeWeight(bar_thickness);
     let startX = ellipses[i].centerX;
-    let startY = windowHeight * 0.335; // this is the bar height
+    let startY = windowHeight * 0.335; // this is the bar y position
     let endX = startX;
-    let endY = startY - windowHeight*0.15 + i*4.8;
+    let endY = startY - windowHeight*0.06 + i*2.8; // was 4.8
     line(startX, startY, endX, endY);
     
     let buttonSize = 20;
@@ -612,7 +536,7 @@ function draw() {
     noFill();
     noStroke();
     ellipse(ellipseData.centerX, centerY, ellipseWidth, ellipseHeight);
-    pointSize = windowWidth * 0.15 / numEllipses;
+    pointSize = windowWidth * 0.3 / numEllipses; // was 0.15
     for (let j = ellipseData.points.length - 1; j >= 0; j--) {
       let band_point = ellipseData.points[j];
       let { angle } = band_point;
@@ -705,9 +629,9 @@ function touchMoved(event) {
   let currentTouchY = touches[0].y;
   let currentTouchX = touches[0].x;
   
-  let rectX = windowWidth * 0.2 + offsetX_OVERALL;
+  let rectX = windowWidth * 0.05 + offsetX_OVERALL;
   let rectY = windowHeight * 0.36;
-  let rectWidth = windowWidth * 0.5;
+  let rectWidth = windowWidth * 0.89;
   let rectHeight = windowHeight * 0.4;    
   
   if (currentTouchX >= rectX && currentTouchX <= rectX + rectWidth &&
@@ -756,7 +680,7 @@ function touchEnded() {
 
   let buttonClicked = false;
 
-  clickProximityX = windowWidth * 0.15 / numEllipses;
+  clickProximityX = windowWidth * 0.3 / numEllipses;
   for (let i = 0; i < ellipses.length; i++) {
     let ellipseData = ellipses[i];
     let dXLeft = abs(touchX - (ellipseData.centerX - clickProximityX));
