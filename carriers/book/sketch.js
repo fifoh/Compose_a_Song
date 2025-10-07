@@ -310,6 +310,12 @@ function touchEnded() {
   return true;
 }
 
+function touchMoved() {
+  lastTouch = touches[0]; // Update the last touch information
+  touchMovedFlag = true; // Set the flag to true indicating touch moved
+  return true; // Prevent any default behavior on touch move
+}
+
 function setup() {
   // Suspend the AudioContext
   audioContext.suspend().then(() => {
@@ -812,6 +818,7 @@ function togglePreset() {
     clearGrid(); // Full reset
   }
 }
+
 
 
 
