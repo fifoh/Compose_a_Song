@@ -632,6 +632,14 @@ function clearTimeouts() {
 }
 
 function togglePlayback() {
+  if (audioContext.state === 'suspended') {
+    audioContext.resume().then(() => {
+      console.log('AudioContext resumed successfully');
+    }).catch((err) => {
+      console.error('Failed to resume AudioContext:', err);
+    });
+  }
+
   if (!isPlaying && !isEasing) {
     let duration_init = durationSlider.value();
     duration = map(duration_init, 100, 1000, 1000, 100);
@@ -826,3 +834,4 @@ function resizeCanvasToWindow() {
   innerCircleRadius = baseRadius * 0.6;
   redraw();
 }
+
