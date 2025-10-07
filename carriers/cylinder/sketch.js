@@ -249,11 +249,8 @@ let minorScale = {
 }
 
 let xoffset_cylinder = 0; // offset for center
-<<<<<<< HEAD
 let y_offset_cylinder = 70;
-=======
 let y_offset_cylinder = 0;
->>>>>>> f4437ca (Updated sketches, styles, and index files)
 
 // default scale mapping
 let scaleMappings = majorScale; // Default scale
@@ -289,11 +286,8 @@ function setup() {
   leftPanel.style('justify-content', 'space-between');
   leftPanel.style('padding', '10px 10px');
   
-<<<<<<< HEAD
   // Left side: Home + Name
-=======
   // Left side: Home button
->>>>>>> f4437ca (Updated sketches, styles, and index files)
   let topLeft = createDiv();
   topLeft.parent(leftPanel);
   topLeft.style('display', 'flex');
@@ -307,11 +301,9 @@ function setup() {
   homeLink.style('opacity', '0.8');
   homeLink.mousePressed(() => window.location.href = "../../index_dutch.html");
 
-<<<<<<< HEAD
   speelkloklogo = createImg("images/speelklok_logo.png", "logo");
   speelkloklogo.size(150, 65);
   speelkloklogo.parent(topLeft);
-=======
   // Right side: Logo (aligned top right)
   let topRight = createDiv();
   topRight.parent(leftPanel);
@@ -325,13 +317,11 @@ function setup() {
   speelkloklogo = createImg("images/speelklok_logo.png", "logo");
   speelkloklogo.size(150, 65);
   speelkloklogo.parent(topRight);
->>>>>>> f4437ca (Updated sketches, styles, and index files)
   speelkloklogo.mousePressed(() => window.location.href = "../../index_dutch.html");  
 
   // === Middle panel (horizontal buttons) ===
   midPanel = createDiv();
   midPanel.style('position', 'absolute');
-<<<<<<< HEAD
   midPanel.style('top', leftPanel.elt.offsetHeight + 'px');
   midPanel.style('left', '0px');
   midPanel.style('width', '100%');
@@ -343,7 +333,6 @@ function setup() {
   midPanel.style('justify-content', 'flex-start');
   midPanel.style('gap', '15px');
   midPanel.style('padding', '10px');
-=======
   midPanel.style('bottom', '0px');
   midPanel.style('left', '0px');
   midPanel.style('width', '100%');
@@ -354,33 +343,25 @@ function setup() {
   midPanel.style('justify-content', 'space-around');
   midPanel.style('padding', '5px');
   midPanel.style('box-sizing', 'border-box');
->>>>>>> f4437ca (Updated sketches, styles, and index files)
-
   // === Bottom panel (horizontal buttons) ===
   rightPanel = createDiv();
   rightPanel.style('position', 'absolute');
-<<<<<<< HEAD
   rightPanel.style('top', leftPanel.elt.offsetHeight + midPanel.elt.offsetHeight + 'px');
   rightPanel.style('left', '0px');
   rightPanel.style('width', '100%');
   rightPanel.style('height', '70px'); // adjust
-=======
   rightPanel.style('top', leftPanel.elt.offsetHeight + 'px');
   rightPanel.style('left', '0px');
   rightPanel.style('width', '100%');
   rightPanel.style('height', '60px'); // adjust
->>>>>>> f4437ca (Updated sketches, styles, and index files)
   rightPanel.style('background-color', '#775989');
   rightPanel.style('display', 'flex');
   rightPanel.style('flex-direction', 'row');
   rightPanel.style('align-items', 'center');
   rightPanel.style('justify-content', 'flex-start');
   rightPanel.style('gap', '25px');
-<<<<<<< HEAD
   rightPanel.style('padding', '10px');   
-=======
   rightPanel.style('padding', '10px');
->>>>>>> f4437ca (Updated sketches, styles, and index files)
 
   playButton = createImg("images/play_icon.jpg", "▶");
   playButton.size(55, 55);
@@ -1000,3 +981,4 @@ function togglePresetSong() {
     presetButton.attribute("src", "images/presetbutton_inactive.jpg");
   }
 }
+
