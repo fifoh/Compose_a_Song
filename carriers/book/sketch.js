@@ -259,40 +259,32 @@ let lastTouch = null;
 let touchMovedFlag = false;
 
 function touchStarted() {
-  
-  if (audioContext.state !== 'running') {
-    userStartAudio().then(() => {
-      audioContext.resume().then(() => {
-        console.log('AudioContext resumed on mousePressed:', audioContext.state);
-      }).catch((err) => {
-        console.error('Error resuming AudioContext:', err);
-      });
-    }).catch((err) => {
-      console.error('Error starting user audio:', err);
-    });
-  }  
-  
-  lastTouch = touches[0]; // Store the last touch information
-  touchMovedFlag = false; // Reset the flag
-  return true; // Prevent any default behavior on touch start
+  // unlock audio
+  userStartAudio();
+
+  // play a tiny silent sound to ensure audio context is running
+  let osc = new p5.Oscillator('sine');
+  osc.start();
+  osc.amp(0);
+  osc.stop('+0.01');
+
+  lastTouch = touches[0];
+  touchMovedFlag = false;
+
+  return false; // helps prevent default touch behavior on mobile
 }
 
 function touchEnded() {
   if (!touchMovedFlag && lastTouch) {
     gridChanged = true;
-    if (getAudioContext().state !== 'running') {
-      getAudioContext().resume();
-    }
-    
-    let touchX = lastTouch.x;
-    let touchY = lastTouch.y;
-    let adjustedtouchX = touchX - rectX;
-    let adjustedtouchY = touchY - rectY;
+
     let touch = lastTouch;
-    let buttonClicked = false;
-    if (touch.x > rectX && touch.x < rectX + rectWidth && touch.y > rectY && touch.y < rectY + rectHeight) {
+    if (touch.x > rectX && touch.x < rectX + rectWidth &&
+        touch.y > rectY && touch.y < rectY + rectHeight) {
+      
       let col = floor((touch.x - rectX) / cellWidth);
       let row = rows - 1 - floor((touch.y - rectY) / (cellHeight + 5));
+      
       if (grid[row][col]) {
         deleteCells(row, col);
       } else {
@@ -302,12 +294,10 @@ function touchEnded() {
         dragging = true;
       }
     }
-    
-    gridChanged = true;
   }
   
-  lastTouch = null; // Clear the stored touch information
-  return true;
+  lastTouch = null;
+  return false;
 }
 
 function touchMoved() {
@@ -818,3 +808,4 @@ function togglePreset() {
     clearGrid(); // Full reset
   }
 }
+
