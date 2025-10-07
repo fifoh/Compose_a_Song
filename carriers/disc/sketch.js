@@ -285,12 +285,6 @@ function setup() {
   rightPanel.style('width', '100%');
   rightPanel.style('height', '70px'); // adjust
 
-  homeLink = createImg("images/home_icon.png", "Home");
-  homeLink.size(55, 55);
-  homeLink.parent(topLeft);
-  homeLink.style('opacity', '0.8');
-  homeLink.mousePressed(() => window.location.href = "../../index_dutch.html");
-
   // Right side: Logo (aligned top right)
   let topRight = createDiv();
   topRight.parent(leftPanel);
@@ -833,5 +827,6 @@ function loadPresetSong() {
   ellipseButtons = [];
   drawButtonEllipses();
 }
+
 
 
