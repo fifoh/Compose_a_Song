@@ -1,4 +1,3 @@
-let osc;
 let started = false;
 let button;
 
@@ -6,33 +5,38 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background('#ecefe9');
   textAlign(CENTER, CENTER);
-  textSize(22);
-  text('Tap the button to start sound', width / 2, height / 2 - 40);
+  textSize(20);
+  text('Tap the button to hear a tone', width / 2, height / 2 - 40);
 
   button = createButton('Tap to Start');
   button.position(width / 2 - 80, height / 2);
-  button.style('font-size', '20px');
-  button.mousePressed(startSound);   // <--- direct sync call, no async/await
+  button.mousePressed(startAudio);
 }
 
-function startSound() {
-  if (!started) {
-    // resume the AudioContext *synchronously* inside the gesture
-    getAudioContext().resume();
+function startAudio() {
+  if (started) return;
+  started = true;
 
-    // create and play the oscillator
-    osc = new p5.Oscillator('sine');
-    osc.freq(440);
-    osc.amp(0.2);
-    osc.start();
-    setTimeout(() => osc.stop(), 1000);
+  const ctx = getAudioContext();
+  ctx.resume();       // must be synchronous with the gesture
+  masterVolume(1.0);  // open p5.sound’s master gain
 
-    background('#cde0b8');
-    text('✅ Sound played', width / 2, height / 2);
-    button.remove();
-    started = true;
-    console.log('AudioContext state:', getAudioContext().state);
-  }
+  // --- Create oscillator and ramp gain manually ---
+  const osc = new p5.Oscillator('sine');
+  const gain = osc.output.gain;           // native GainNode inside p5.Oscillator
+  const now = ctx.currentTime;
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.linearRampToValueAtTime(0.3, now + 0.05);
+
+  osc.freq(440);
+  osc.start(now + 0.05);                  // schedule slightly ahead
+  osc.stop(now + 1.05);
+
+  background('#cde0b8');
+  text('✅ You should hear a 1-second beep', width / 2, height / 2);
+  button.remove();
+
+  console.log('AudioContext state:', ctx.state);
 }
 
 function draw() {}
