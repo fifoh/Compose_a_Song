@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -46,17 +46,21 @@
       box-sizing: border-box;
       flex-shrink: 0;
       position: relative;
-      /* REMOVE height: 100vh; */
+    }
+
+    /* Top section: heading + logo */
+    .sidebar-top {
+      display: flex;
+      justify-content: space-between; /* heading left, logo right */
+      align-items: flex-start;
+      margin-bottom: 40px;
     }
 
     .sidebar-heading {
       font-family: 'Right Grotesk Medium', sans-serif;
       color: white;
       font-size: 32px;
-      text-align: left;
-      padding-left: 20px;
       line-height: 1.1;
-      margin-bottom: 40px;
     }
 
     .sidebar-heading .underscore {
@@ -66,10 +70,15 @@
       margin-top: 16px;
     }
 
+    .top-right-logo img {
+      width: 160px;
+      height: auto;
+    }
+
     .sketch-icons {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px; /* This creates the vertical space between boxes */
+      gap: 15px;
       width: 100%;
       padding: 0 10px;
       box-sizing: border-box;
@@ -81,7 +90,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      /* REMOVE height: 100%; */
       font-family: 'Right Grotesk Medium', sans-serif;
       font-size: 24px;
       text-align: center;
@@ -98,7 +106,6 @@
       background-color: rgba(255,255,255,0.1);
     }
 
-    /* Language toggle under grid */
     .language-toggle {
       font-family: 'Right Grotesk Medium', sans-serif;
       font-size: 20px;
@@ -113,17 +120,6 @@
 
     .language-toggle .nl { color: #A8B69A; }
     .language-toggle .eng { color: white; }
-
-    /* Museum logo top right */
-    .top-right-logo {
-      position: relative;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      text-align: right;
-    }
-
-    .top-right-logo img { width: 160px; height: auto; }
 
     /* Content area */
     #content {
@@ -207,19 +203,21 @@
 </head>
 
 <body>
-  <div class="top-right-logo">
-    <img src="images/logo.png" alt="Museum Logo NL/EN" />
-  </div>
-
   <div id="loading-overlay">
     <div class="loader"></div>
   </div>
 
   <div id="main-container">
     <div id="sidebar">
-      <div class="sidebar-heading">
-        Componeer<br>een lied
-        <div class="underscore"></div>
+      <div class="sidebar-top">
+        <div class="sidebar-heading">
+          Componeer<br>een lied
+          <div class="underscore"></div>
+        </div>
+
+        <div class="top-right-logo">
+          <img src="images/logo.png" alt="Museum Logo NL/EN" />
+        </div>
       </div>
 
       <div class="sketch-icons">
