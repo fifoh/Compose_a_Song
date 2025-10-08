@@ -51,8 +51,8 @@
     /* Top section: heading + logo */
     .sidebar-top {
       display: flex;
-      justify-content: space-between; /* heading left, logo right */
-      align-items: flex-start;        /* top-align logo with heading */
+      justify-content: space-between;
+      align-items: flex-start;
       margin-bottom: 40px;
     }
 
@@ -199,12 +199,42 @@
 
       .top-right-logo img { width: 160px; }
     }
+
+    /* Landscape overlay for mobile */
+    @media screen and (max-width: 768px) and (orientation: landscape) {
+      body > *:not(#landscape-overlay) {
+        display: none;
+      }
+
+      #landscape-overlay {
+        display: flex;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #ADB99F;
+        color: white;
+        font-family: 'Right Grotesk Medium', sans-serif;
+        font-size: 24px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+        z-index: 10000;
+      }
+    }
   </style>
 </head>
 
 <body>
   <div id="loading-overlay">
     <div class="loader"></div>
+  </div>
+
+  <!-- Landscape overlay -->
+  <div id="landscape-overlay">
+    Please rotate your phone to portrait mode to use this interactive.
   </div>
 
   <div id="main-container">
