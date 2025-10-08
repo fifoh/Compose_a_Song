@@ -200,12 +200,17 @@
       .top-right-logo img { width: 160px; }
     }
 
-    /* Landscape overlay for mobile */
+    /* Hide overlay by default */
+    #landscape-overlay {
+      display: none;
+    }
+    
+    /* Show overlay only on mobile landscape */
     @media screen and (max-width: 768px) and (orientation: landscape) {
       body > *:not(#landscape-overlay) {
         display: none;
       }
-
+    
       #landscape-overlay {
         display: flex;
         position: fixed;
