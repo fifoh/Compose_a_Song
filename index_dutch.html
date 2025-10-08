@@ -1,258 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My p5.js Sketches</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My p5.js Sketches</title>
 
-  <style>
-    @font-face {
-      font-family: 'Right Grotesk Wide Medium';
-      src: url('fonts/RightGrotesk-WideMedium.otf') format('truetype');
-    }
+<style>
+@font-face {
+  font-family: 'Right Grotesk Wide Medium';
+  src: url('fonts/RightGrotesk-WideMedium.otf') format('truetype');
+}
+@font-face {
+  font-family: 'Right Grotesk Medium';
+  src: url('fonts/RightGrotesk-Medium.otf') format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat SemiBold';
+  src: url('fonts/Montserrat-Medium.ttf') format('truetype');
+}
 
-    @font-face {
-      font-family: 'Right Grotesk Medium';
-      src: url('fonts/RightGrotesk-Medium.otf') format('truetype');
-    }
+body { margin:0; padding:0; font-family: Arial,sans-serif; background-color: #ADB99F; }
 
-    @font-face {
-      font-family: 'Montserrat SemiBold';
-      src: url('fonts/Montserrat-Medium.ttf') format('truetype');
-    }
+#main-container { display:flex; flex-direction:row; height:100vh; flex-wrap:wrap; position:relative; }
+#sidebar { background-color:#6B8D5C; width:220px; display:flex; flex-direction:column; padding:40px 10px 20px 10px; box-sizing:border-box; flex-shrink:0; position:relative; }
+.sidebar-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:40px; }
+.sidebar-heading { font-family:'Right Grotesk Medium',sans-serif; color:white; font-size:32px; line-height:1.1; }
+.sidebar-heading .underscore { width:30%; height:1px; background-color:white; margin-top:16px; }
+.top-right-logo img { width:160px; height:auto; }
+.sketch-icons { display:grid; grid-template-columns:1fr 1fr; gap:15px; width:100%; padding:0 10px; box-sizing:border-box; margin-bottom:20px; }
+.sketch-link { display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:'Right Grotesk Medium',sans-serif; font-size:24px; text-align:center; padding:15px 5px; background-color:rgba(255,255,255,0.05); border-radius:8px; cursor:pointer; color:#a8b69a; transition: transform 0.2s, background-color 0.2s; }
+.sketch-link:hover { transform:scale(1.05); background-color: rgba(255,255,255,0.1); }
+.language-toggle { font-family:'Right Grotesk Medium',sans-serif; font-size:20px; margin-top:20px; text-align:center; }
+.language-toggle a { text-decoration:none; cursor:pointer; }
+.language-toggle .nl { color:#A8B69A; }
+.language-toggle .eng { color:white; }
+#content { flex:1; padding:80px 160px 80px 40px; box-sizing:border-box; }
+.instructions { max-width:800px; margin:0 auto; }
+.instructions-title { font-family:'Right Grotesk Wide Medium',sans-serif; font-size:68px; margin-bottom:20px; color:white; }
+.instructions ul { font-family:'Montserrat SemiBold',sans-serif; font-size:28px; list-style-position:outside; padding-left:20px; color:white; }
+.instructions ul li { margin-bottom:16px; line-height:1.6; }
+#loading-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background-color:white; z-index:9999; display:none; align-items:center; justify-content:center; }
+.loader { border:12px solid #f3f3f3; border-top:12px solid #333; border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite; }
+@keyframes spin { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+@media screen and (max-width: 768px) { #main-container { flex-direction:column; height:auto; } #sidebar { width:100%; height:auto; padding:20px 10px; } #content { padding:20px 10px; } .sidebar-heading { font-size:24px; padding-left:10px; } .sketch-link { font-size:24px; } .instructions-title { font-size:36px; } .instructions ul { font-size:18px; } .language-toggle { font-size:16px; } .top-right-logo img { width:160px; } }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #ADB99F;
-    }
-
-    #main-container {
-      display: flex;
-      flex-direction: row;
-      height: 100vh;
-      flex-wrap: wrap;
-      position: relative;
-    }
-
-    /* Sidebar */
-    #sidebar {
-      background-color: #6B8D5C;
-      width: 220px;
-      display: flex;
-      flex-direction: column;
-      padding: 40px 10px 20px 10px;
-      box-sizing: border-box;
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    /* Top section: heading + logo */
-    .sidebar-top {
-      display: flex;
-      justify-content: space-between; /* heading left, logo right */
-      align-items: flex-start;
-      margin-bottom: 40px;
-    }
-
-    .sidebar-heading {
-      font-family: 'Right Grotesk Medium', sans-serif;
-      color: white;
-      font-size: 32px;
-      line-height: 1.1;
-    }
-
-    .sidebar-heading .underscore {
-      width: 30%;
-      height: 1px;
-      background-color: white;
-      margin-top: 16px;
-    }
-
-    .top-right-logo img {
-      width: 160px;
-      height: auto;
-    }
-
-    .sketch-icons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      width: 100%;
-      padding: 0 10px;
-      box-sizing: border-box;
-      margin-bottom: 20px;
-    }
-
-    .sketch-link {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Right Grotesk Medium', sans-serif;
-      font-size: 24px;
-      text-align: center;
-      padding: 15px 5px;
-      background-color: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      cursor: pointer;
-      color: #a8b69a;
-      transition: transform 0.2s, background-color 0.2s;
-    }
-
-    .sketch-link:hover {
-      transform: scale(1.05);
-      background-color: rgba(255,255,255,0.1);
-    }
-
-    .language-toggle {
-      font-family: 'Right Grotesk Medium', sans-serif;
-      font-size: 20px;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .language-toggle a {
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .language-toggle .nl { color: #A8B69A; }
-    .language-toggle .eng { color: white; }
-
-    /* Content area */
-    #content {
-      flex: 1;
-      padding: 80px 160px 80px 40px;
-      box-sizing: border-box;
-    }
-
-    .instructions {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .instructions-title {
-      font-family: 'Right Grotesk Wide Medium', sans-serif;
-      font-size: 68px;
-      margin-bottom: 20px;
-      color: white;
-    }
-
-    .instructions ul {
-      font-family: 'Montserrat SemiBold', sans-serif;
-      font-size: 28px;
-      list-style-position: outside;
-      padding-left: 20px;
-      color: white;
-    }
-
-    .instructions ul li {
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
-
-    /* Loading overlay */
-    #loading-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: white;
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .loader {
-      border: 12px solid #f3f3f3;
-      border-top: 12px solid #333;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Responsive adjustments */
-    @media screen and (max-width: 768px) {
-      #main-container { flex-direction: column; height: auto; }
-
-      #sidebar { width: 100%; height: auto; padding: 20px 10px; }
-
-      #content { padding: 20px 10px; }
-
-      .sidebar-heading { font-size: 24px; padding-left: 10px; }
-
-      .sketch-link { font-size: 24px; }
-
-      .instructions-title { font-size: 36px; }
-
-      .instructions ul { font-size: 18px; }
-
-      .language-toggle { font-size: 16px; }
-
-      .top-right-logo img { width: 160px; }
-    }
-  </style>
+/* Landscape overlay (phones only; exclude tablets) */
+#landscape-overlay { display:none; }
+@media screen and (orientation: landscape) and (max-width: 768px) and (max-height:720px) {
+  body > *:not(#landscape-overlay) { display:none; }
+  #landscape-overlay {
+    display:flex !important;
+    position:fixed; top:0; left:0;
+    width:100vw; height:100vh;
+    background-color:#ADB99F;
+    color:white;
+    font-family:'Right Grotesk Medium',sans-serif;
+    font-size:22px;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    box-sizing:border-box;
+    z-index:10001;
+  }
+}
+#landscape-overlay .inner { max-width:420px; line-height:1.4; }
+</style>
 </head>
-
 <body>
-  <div id="loading-overlay">
-    <div class="loader"></div>
-  </div>
+<div id="loading-overlay"><div class="loader"></div></div>
 
-  <div id="main-container">
-    <div id="sidebar">
-      <div class="sidebar-top">
-        <div class="sidebar-heading">
-          Componeer<br>een lied
-          <div class="underscore"></div>
-        </div>
+<!-- Landscape overlay -->
+<div id="landscape-overlay" role="dialog" aria-hidden="true" aria-live="polite">
+  <div class="inner">Draai je telefoon naar portretmodus om deze interactieve te gebruiken.</div>
+</div>
 
-        <div class="top-right-logo">
-          <img src="images/logo.png" alt="Museum Logo NL/EN" />
-        </div>
+<div id="main-container">
+  <div id="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-heading">
+        Componeer<br>een lied
+        <div class="underscore"></div>
       </div>
-
-      <div class="sketch-icons">
-        <div class="sketch-link" data-sketch="carriers/disc/index.html">Metalen<br>Plaat</div>
-        <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cilinder</div>
-        <div class="sketch-link" data-sketch="carriers/book/index.html">Orgelboek</div>
-        <div class="sketch-link" data-sketch="carriers/roll/index.html">Papieren<br>Rol</div>
-      </div>
-
-      <div class="language-toggle">
-        <a href="index.html">
-          <span class="eng">NL </span><span class="nl">/ ENG</span>
-        </a>
+      <div class="top-right-logo">
+        <img src="images/logo.png" alt="Museum Logo NL/EN" />
       </div>
     </div>
 
-    <div id="content">
-      <div class="instructions">
-        <div class="instructions-title">Wat ga je doen</div>
-        <ul>
-          <li>Dit interactieve is uitsluitend bedoeld voor gebruik op mobiele telefoons: controleer dan of het geluid van je telefoon aanstaat (niet op stil) en zet het volume hoger</li>
-          <li>Kies een van de vier programmadragers</li>
-          <li>Plaats noten door op het scherm te klikken, en luister jouw liedje door op play te klikken</li>
-          <li>Wissel tussen instrumenten en toonladders door op de knoppen te klikken</li>
-        </ul>
-      </div>
+    <div class="sketch-icons">
+      <div class="sketch-link" data-sketch="carriers/disc/index.html">Metalen<br>Plaat</div>
+      <div class="sketch-link" data-sketch="carriers/cylinder/index.html">Cilinder</div>
+      <div class="sketch-link" data-sketch="carriers/book/index.html">Orgelboek</div>
+      <div class="sketch-link" data-sketch="carriers/roll/index.html">Papieren<br>Rol</div>
+    </div>
+
+    <div class="language-toggle">
+      <a href="index.html"><span class="eng">NL </span><span class="nl">/ ENG</span></a>
     </div>
   </div>
 
-  <script>
-    document.querySelectorAll('.sketch-link').forEach(link => {
-      link.addEventListener('click', () => {
-        window.location.href = link.getAttribute('data-sketch');
-      });
+  <div id="content">
+    <div class="instructions">
+      <div class="instructions-title">Wat ga je doen</div>
+      <ul>
+        <li>Dit interactieve is uitsluitend bedoeld voor gebruik op mobiele telefoons: controleer dan of het geluid van je telefoon aanstaat (niet op stil) en zet het volume hoger</li>
+        <li>Kies een van de vier programmadragers</li>
+        <li>Plaats noten door op het scherm te klikken, en luister jouw liedje door op play te klikken</li>
+        <li>Wissel tussen instrumenten en toonladders door op de knoppen te klikken</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.sketch-link').forEach(link => {
+  link.addEventListener('click', () => {
+    window.location.href = link.getAttribute('data-sketch');
+  });
+});
+
+// JS fallback for phones in landscape (exclude tablets)
+(function(){
+  const overlay = document.getElementById('landscape-overlay');
+  const children = Array.from(document.body.children);
+  const mq = window.matchMedia('(orientation: landscape) and (max-width: 768px) and (max-height:720px)');
+  function showOverlay() {
+    overlay.style.display = 'flex';
+    overlay.setAttribute('aria-hidden','false');
+    children.forEach(el=>{
+      if(el!==overlay){el.__prevDisplay=el.style.display; el.style.display='none';}
     });
-  </script>
+  }
+  function hideOverlay() {
+    overlay.style.display='none';
+    overlay.setAttribute('aria-hidden','true');
+    children.forEach(el=>{
+      if(el!==overlay){el.style.display=el.__prevDisplay||''; delete el.__prevDisplay;}
+    });
+  }
+  function check(){ mq.matches ? showOverlay() : hideOverlay(); }
+  check();
+  mq.addEventListener ? mq.addEventListener('change',check) : mq.addListener(check);
+  window.addEventListener('resize',check);
+  window.addEventListener('orientationchange',check);
+  window.setTimeout(check,300);
+})();
+</script>
 </body>
 </html>
