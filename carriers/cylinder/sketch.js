@@ -795,17 +795,19 @@ function touchStarted() {
 
 function touchMoved(event) {
   event.preventDefault();
-  if (touches.length > 0 && touches[0].y > canvasTopBoundary) {
-    isDragging = true;
-    let currentTouchX = touches[0].x;
-    let currentTouchY = touches[0].y;
-    let deltaX = currentTouchX - previousTouchX;
-    let deltaY = currentTouchY - previousTouchY;
-    angleY -= deltaX * 0.003;
-    rotationalValue = (angleY / TWO_PI) % 1;
-    previousTouchX = currentTouchX;
-    previousTouchY = currentTouchY;
-  }
+  if (!isPlaying) {
+	  if (touches.length > 0 && touches[0].y > canvasTopBoundary) {
+	    isDragging = true;
+	    let currentTouchX = touches[0].x;
+	    let currentTouchY = touches[0].y;
+	    let deltaX = currentTouchX - previousTouchX;
+	    let deltaY = currentTouchY - previousTouchY;
+	    angleY -= deltaX * 0.003;
+	    rotationalValue = (angleY / TWO_PI) % 1;
+	    previousTouchX = currentTouchX;
+	    previousTouchY = currentTouchY;
+	  }
+	}
 }
 
 function touchEnded() {
@@ -960,6 +962,7 @@ function togglePresetSong() {
     presetButton.attribute("src", "images/presetbutton_inactive.jpg");
   }
 }
+
 
 
 
