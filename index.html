@@ -114,15 +114,16 @@
     .language-toggle .nl { color: white; }
     .language-toggle .eng { color: #A8B69A; }
 
-    /* Museum logo top right */
     .top-right-logo {
       position: relative;
-      float: right;         /* push it to the right side of the sidebar */
-      margin-top: 0;        /* align with heading */
       text-align: right;
+      margin-bottom: 40px; /* optional spacing below logo */
     }
-
-    .top-right-logo img { width: 160px; height: auto; }
+    
+    .top-right-logo img {
+      width: 160px;
+      height: auto;
+    }
 
     /* Content area */
     #content {
@@ -220,6 +221,10 @@
         Compose<br>a song
         <div class="underscore"></div>
       </div>
+
+      <div class="top-right-logo">
+        <img src="images/logo.png" alt="Museum Logo NL/EN" />
+      </div>      
 
       <div class="sketch-icons">
         <div class="sketch-link" data-sketch="carriers/disc/index.html">Metal<br>Disc</div>
