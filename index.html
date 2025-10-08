@@ -51,8 +51,8 @@
     /* Top section: heading + logo */
     .sidebar-top {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      justify-content: space-between; /* heading left, logo right */
+      align-items: flex-start;        /* top-align logo with heading */
       margin-bottom: 40px;
     }
 
@@ -200,19 +200,23 @@
       .top-right-logo img { width: 160px; }
     }
 
-    /* Hide overlay by default */
+    /* LANDSCAPE OVERLAY
+       - Hide overlay by default
+       - Display overlay only when device is in landscape *and* has a relatively small height
+         (phones in landscape will generally have a small viewport height).
+       - Use a JS fallback in case orientation media queries are inconsistent in the browser.
+    */
     #landscape-overlay {
-      display: none;
+      display: none; /* hidden by default */
     }
-    
-    /* Show overlay only on mobile landscape */
-    @media screen and (max-width: 768px) and (orientation: landscape) {
+
+    /* CSS-only show: target landscape on smaller-height viewports (phones) */
+    @media screen and (orientation: landscape) and (max-height: 720px) {
       body > *:not(#landscape-overlay) {
         display: none;
       }
-    
       #landscape-overlay {
-        display: flex;
+        display: flex !important;
         position: fixed;
         top: 0; left: 0;
         width: 100vw;
@@ -220,14 +224,20 @@
         background-color: #ADB99F;
         color: white;
         font-family: 'Right Grotesk Medium', sans-serif;
-        font-size: 24px;
+        font-size: 22px;
         text-align: center;
         justify-content: center;
         align-items: center;
         padding: 20px;
         box-sizing: border-box;
-        z-index: 10000;
+        z-index: 10001; /* above the loading overlay (9999) */
       }
+    }
+
+    /* small visual tweak for the message container */
+    #landscape-overlay .inner {
+      max-width: 420px;
+      line-height: 1.4;
     }
   </style>
 </head>
@@ -237,9 +247,11 @@
     <div class="loader"></div>
   </div>
 
-  <!-- Landscape overlay -->
-  <div id="landscape-overlay">
-    Please rotate your phone to portrait mode to use this interactive.
+  <!-- Landscape overlay (hidden by default; shown via CSS media query or JS fallback) -->
+  <div id="landscape-overlay" role="dialog" aria-hidden="true" aria-live="polite">
+    <div class="inner">
+      Please rotate your phone to portrait mode to use this interactive.
+    </div>
   </div>
 
   <div id="main-container">
@@ -283,11 +295,71 @@
   </div>
 
   <script>
+    // link handlers (unchanged)
     document.querySelectorAll('.sketch-link').forEach(link => {
       link.addEventListener('click', () => {
         window.location.href = link.getAttribute('data-sketch');
       });
     });
+
+    // JS fallback to ensure the overlay shows in landscape for small-height viewports.
+    // Some browsers/devices don't consistently honor orientation media queries,
+    // so we also toggle the overlay via matchMedia and resize/orientation events.
+    (function () {
+      const overlay = document.getElementById('landscape-overlay');
+      const children = Array.from(document.body.children);
+
+      // matchMedia query to match the CSS rule above
+      const mq = window.matchMedia('(orientation: landscape) and (max-height: 720px)');
+
+      function showOverlay() {
+        // show overlay and hide other body children
+        overlay.style.display = 'flex';
+        overlay.setAttribute('aria-hidden', 'false');
+        children.forEach(el => {
+          if (el !== overlay) {
+            // only set inline style if it's not already hidden by CSS (we can override safely)
+            el.__prevDisplay = el.style.display; // store previous inline style to restore later
+            el.style.display = 'none';
+          }
+        });
+      }
+
+      function hideOverlay() {
+        // hide overlay and restore other body children
+        overlay.style.display = 'none';
+        overlay.setAttribute('aria-hidden', 'true');
+        children.forEach(el => {
+          if (el !== overlay) {
+            // restore previous inline display value (empty string => CSS takes over)
+            if (el.hasOwnProperty('__prevDisplay')) {
+              el.style.display = el.__prevDisplay;
+              delete el.__prevDisplay;
+            } else {
+              el.style.display = '';
+            }
+          }
+        });
+      }
+
+      function check() {
+        if (mq.matches) {
+          showOverlay();
+        } else {
+          hideOverlay();
+        }
+      }
+
+      // initial check
+      check();
+
+      // respond to changes
+      mq.addEventListener ? mq.addEventListener('change', check) : mq.addListener(check);
+      window.addEventListener('resize', check);
+      window.addEventListener('orientationchange', check);
+      // optional: also run after a short delay on load (helpful for some browsers)
+      window.setTimeout(check, 300);
+    })();
   </script>
 </body>
 </html>
