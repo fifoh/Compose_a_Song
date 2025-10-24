@@ -293,6 +293,13 @@ function touchEnded() {
     if (touch.x > rectX && touch.x < rectX + rectWidth && touch.y > rectY && touch.y < rectY + rectHeight) {
       let col = floor((touch.x - rectX) / cellWidth);
       let row = rows - 1 - floor((touch.y - rectY) / (cellHeight + 5));
+
+      // Only allow editing if it's NOT a preset note
+      if (showPreset && presetSong && presetSong[row] && presetSong[row][col]) {
+        // Do nothing - preset notes are locked
+        return true;
+      }
+      
       if (grid[row][col]) {
         deleteCells(row, col);
       } else {
@@ -673,7 +680,11 @@ function stopAnimation() {
 function playColumnSounds(col) {
   if (col < 0 || col >= cols) return;
   for (let row = 0; row < rows; row++) {
-    if (grid[row][col]) {
+
+    if (
+      grid[row][col] ||
+      (showPreset && presetSong && presetSong[row] && presetSong[row][col])
+    ) {
       if (!isPlaying[row]) {
         playSound(row);
         isPlaying[row] = true;
@@ -818,6 +829,7 @@ function togglePreset() {
     clearGrid(); // Full reset
   }
 }
+
 
 
 
