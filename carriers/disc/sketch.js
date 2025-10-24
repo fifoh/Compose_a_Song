@@ -529,7 +529,10 @@ function touchStarted() {
       if (!buttonClicked) {
         let [rIndex, aIndex] = getClosestQuantizedIndices(adjustedTouchX, adjustedTouchY);
         if (rIndex > 0) {
-          points[rIndex][aIndex] = !points[rIndex][aIndex];
+            // Only toggle user point if there is no preset point
+            if (!visualPoints[rIndex][aIndex]) {
+                points[rIndex][aIndex] = !points[rIndex][aIndex];
+            }
         }
       }
     }
@@ -834,5 +837,6 @@ function resizeCanvasToWindow() {
   innerCircleRadius = baseRadius * 0.6;
   redraw();
 }
+
 
 
