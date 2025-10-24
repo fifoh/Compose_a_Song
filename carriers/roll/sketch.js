@@ -232,7 +232,7 @@ let ellipses = [];
 let isPlaying = false;
 let playStopButton;
 let speedSlider;
-const minDistance = 5;
+const minDistance = 7; // was 5
 let clickProximityX;
 let ellipseHeight;
 let clickProximityY;
@@ -552,7 +552,7 @@ function draw() {
     noFill();
     noStroke();
     ellipse(ellipseData.centerX, centerY, ellipseWidth, ellipseHeight);
-    pointSize = windowWidth * 0.5 / numEllipses; // was 0.3, tried 0.2, 0.4
+    pointSize = windowWidth * 0.5 / numEllipses; // was 0.3
     for (let j = ellipseData.points.length - 1; j >= 0; j--) {
       let band_point = ellipseData.points[j];
       let { angle } = band_point;
@@ -904,6 +904,7 @@ function loadPresetSong() {
   }
 
 }
+
 
 
 
