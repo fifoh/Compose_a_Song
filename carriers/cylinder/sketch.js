@@ -453,24 +453,22 @@ function draw() {
                          colors[i][j].levels[2] === 200;
       let isUserNoteOnPreset = notes[i][j] && isPresetNote;
       
-      if (isUserNoteOnPreset) {
-        fill(0, alpha); // Black  
-      } else if (notes[i][j]) {
-        fill(0, alpha); // Black
-      } else if (isPresetNote) {
-        let originalIndex = scaleMappings[i];
-        let colIndex = individualInstrumentArray[originalIndex] - 1;        
-        let originalAlpha = alpha * 1.0;
-        let newColor = color(ellipseColors[colIndex]);
-        let r = red(newColor);
-        let g = green(newColor);
-        let b = blue(newColor);
-
-        fill(r, g, b, originalAlpha);        
-
-      } else {
-        noFill();
-      }
+	  if (notes[i][j] && !isPresetNote) {
+	    // User-activated note
+	    fill(0, alpha);
+	  } else if (isPresetNote) {
+	    // Preset note color mapping (even when active)
+	    let originalIndex = scaleMappings[i];
+	    let colIndex = individualInstrumentArray[originalIndex] - 1;        
+	    let originalAlpha = alpha * 1.0;
+	    let newColor = color(ellipseColors[colIndex]);
+	    let r = red(newColor);
+	    let g = green(newColor);
+	    let b = blue(newColor);
+	    fill(r, g, b, originalAlpha);
+	  } else {
+	    noFill();
+	  }
 
       stroke(0, alpha);
       strokeWeight(0.7);
@@ -963,6 +961,7 @@ function togglePresetSong() {
     presetButton.attribute("src", "images/presetbutton_inactive.jpg");
   }
 }
+
 
 
 
