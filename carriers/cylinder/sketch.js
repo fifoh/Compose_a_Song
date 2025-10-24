@@ -870,18 +870,17 @@ function handleNoteClick() {
                       colors[i][j].levels[1] === 200 && 
                       colors[i][j].levels[2] === 200;
     
+    if (showingPreset && isPresetNote) {
+      return; // Ignore clicks on preset notes
+    }
+
+    // Otherwise, toggle normally
     if (notes[i][j]) {
-      // When removing a note, restore the original color (preset or default)
-      if (isPresetNote) {
-        colors[i][j] = color(200, 200, 200, 50);
-      } else {
-        colors[i][j] = color(0, 0, 0, 35);
-      }
       notes[i][j] = false;
+      colors[i][j] = color(0, 0, 0, 35); // default empty
     } else {
-      // When adding a note, keep the preset color in the background
       notes[i][j] = true;
-      // Don't change the color here - let the draw() function handle the coloring
+      // Don't change the color here; draw() handles it
     }
   }
 }
@@ -961,6 +960,7 @@ function togglePresetSong() {
     presetButton.attribute("src", "images/presetbutton_inactive.jpg");
   }
 }
+
 
 
 
