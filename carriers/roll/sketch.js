@@ -437,7 +437,23 @@ function draw() {
       if (isPlaying) {
         preset.angle += speedSlider.value();
         preset.angle %= TWO_PI;
-      }
+
+        // === NEW: trigger sound when the preset crosses the play line ===
+        let playThreshold = PI + PI / 2; // same line as normal points
+        if (!preset.hasPlayed) {
+          if (preset.angle >= playThreshold && preset.angle < playThreshold + speedSlider.value()) {
+            let bufferIndex = scaleMappings[preset.band];
+            playSound(audioBuffers[bufferIndex]);
+            flashBar(preset.band);
+            preset.hasPlayed = true;  // prevent multiple triggers per loop
+          }
+        }
+      
+        // Reset for the next loop
+        if (preset.angle < playThreshold) {
+          preset.hasPlayed = false;
+        }
+      } // IS this needed?
 
       if (touchMovedOccurred) {
         let deltaY = touchY - previousTouchY;
@@ -864,21 +880,21 @@ function loadPresetSong() {
     }
 
     presetVisualPoints = [
-      { band: 2, angle: PI + PI/2 - 0.6 },
-      { band: 2, angle: PI + PI/2 - 0.9 },
-      { band: 3, angle: PI + PI/2 - 1.2 },
-      { band: 4, angle: PI + PI/2 - 1.5 },
-      { band: 4, angle: PI + PI/2 - 1.8 },
-      { band: 3, angle: PI + PI/2 - 2.1 },
-      { band: 2, angle: PI + PI/2 - 2.4 },
-      { band: 1, angle: PI + PI/2 - 2.7 },
-      { band: 0, angle: PI + PI/2 - 3.0 },
-      { band: 0, angle: PI + PI/2 - 3.3 },
-      { band: 1, angle: PI + PI/2 - 3.6 },
-      { band: 2, angle: PI + PI/2 - 3.9 },
-      { band: 2, angle: PI + PI/2 - 4.2 },
-      { band: 1, angle: PI + PI/2 - 4.6 },
-      { band: 1, angle: PI + PI/2 - 4.8 }
+      { band: 2, angle: PI + PI/2 - 0.6, hasPlayed: false },
+      { band: 2, angle: PI + PI/2 - 0.9, hasPlayed: false },
+      { band: 3, angle: PI + PI/2 - 1.2, hasPlayed: false },
+      { band: 4, angle: PI + PI/2 - 1.5, hasPlayed: false },
+      { band: 4, angle: PI + PI/2 - 1.8, hasPlayed: false },
+      { band: 3, angle: PI + PI/2 - 2.1, hasPlayed: false },
+      { band: 2, angle: PI + PI/2 - 2.4, hasPlayed: false },
+      { band: 1, angle: PI + PI/2 - 2.7, hasPlayed: false },
+      { band: 0, angle: PI + PI/2 - 3.0, hasPlayed: false },
+      { band: 0, angle: PI + PI/2 - 3.3, hasPlayed: false },
+      { band: 1, angle: PI + PI/2 - 3.6, hasPlayed: false },
+      { band: 2, angle: PI + PI/2 - 3.9, hasPlayed: false },
+      { band: 2, angle: PI + PI/2 - 4.2, hasPlayed: false },
+      { band: 1, angle: PI + PI/2 - 4.6, hasPlayed: false },
+      { band: 1, angle: PI + PI/2 - 4.8, hasPlayed: false }
     ];
 
     presetButton.elt.src = 'images/presetbutton_active.jpg';
@@ -886,4 +902,5 @@ function loadPresetSong() {
     presetVisualPoints = [];
     presetButton.elt.src = 'images/presetbutton_inactive.jpg';
   }
+
 }
