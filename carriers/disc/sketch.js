@@ -610,7 +610,7 @@ function playAllNotes(startSegmentIndex) {
           return;
         }
         for (let i = 3; i <= numRings; i++) {
-          if (points[i][adjustedIndex]) {
+          if (points[i][adjustedIndex] || (showPresetPoints && visualPoints[i] && visualPoints[i][adjustedIndex])) {
             let bufferIndex = scaleMappings[i - 3];
             playSound(audioBuffers[bufferIndex]);
           }
@@ -834,4 +834,5 @@ function resizeCanvasToWindow() {
   innerCircleRadius = baseRadius * 0.6;
   redraw();
 }
+
 
