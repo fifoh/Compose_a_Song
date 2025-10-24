@@ -730,7 +730,7 @@ function touchEnded() {
       let pointX = ellipseData.centerX + ellipseWidth / 2 * Math.cos(angle);
       let pointY = centerY + ellipseHeight / 2 * Math.sin(angle);
 
-      if (dist(touchX, touchY, pointX, pointY) <= pointSize / 2) {
+      if (dist(touchX, touchY, pointX, pointY) <= pointSize / 1.5) { // was over 2 delete point
         ellipseData.points.splice(j, 1);
         break;
       }
@@ -904,6 +904,7 @@ function loadPresetSong() {
   }
 
 }
+
 
 
 
