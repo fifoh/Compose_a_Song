@@ -552,13 +552,13 @@ function draw() {
     noFill();
     noStroke();
     ellipse(ellipseData.centerX, centerY, ellipseWidth, ellipseHeight);
-    pointSize = windowWidth * 0.4 / numEllipses; // was 0.3, tried 0.2, 0.4
+    pointSize = windowWidth * 0.5 / numEllipses; // was 0.3, tried 0.2, 0.4
     for (let j = ellipseData.points.length - 1; j >= 0; j--) {
       let band_point = ellipseData.points[j];
       let { angle } = band_point;
       let pointX = ellipseData.centerX + ellipseWidth / 2 * Math.cos(angle);
       let pointY = centerY + ellipseHeight / 2 * Math.sin(angle);
-      let verticalSize = map(1 - pow(abs(Math.sin(angle)), 10), 0, 1, 1, 10);
+      let verticalSize = map(1 - pow(abs(Math.sin(angle)), 10), 0, 1, 1, 15); // last number was 10
 
       let adjustment = -2.5;
 
@@ -904,6 +904,7 @@ function loadPresetSong() {
   }
 
 }
+
 
 
 
