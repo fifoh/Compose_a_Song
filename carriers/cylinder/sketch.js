@@ -950,6 +950,7 @@ function togglePresetSong() {
     for (let note of presetSong) {
       let [i, j] = note;
       if (i < totalVerticalPoints && j < totalHorizontalPoints) {
+		notes[i][j] = true; // added for playing back preset points  
         colors[i][j] = color(200, 200, 200, 50); // Light grey with initial alpha
       }
     }
@@ -962,6 +963,7 @@ function togglePresetSong() {
     presetButton.attribute("src", "images/presetbutton_inactive.jpg");
   }
 }
+
 
 
 
