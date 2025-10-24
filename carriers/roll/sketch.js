@@ -696,7 +696,7 @@ function touchEnded() {
 
   let buttonClicked = false;
 
-  clickProximityX = windowWidth * 0.31 / numEllipses; // was 0.3
+  clickProximityX = windowWidth * 0.305 / numEllipses; // was 0.3
   for (let i = 0; i < ellipses.length; i++) {
     let ellipseData = ellipses[i];
     let dXLeft = abs(touchX - (ellipseData.centerX - clickProximityX));
@@ -904,6 +904,7 @@ function loadPresetSong() {
   }
 
 }
+
 
 
 
